@@ -71,13 +71,13 @@
 <div id="toast" class="toast"></div>
 
 <script>
-/* ============ ตั้งค่า (แก้ตรงนี้) ============ */
+
 const CFG = {
-  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwStJd4U7FE42lzSWrSP8X3gNddLnfXAn_PyDRVhjpraYHNinUo9yN2K1ylWmSBS3aEfg/exec',   // URL ของ Google Apps Script (Web app)
-  PUSH_URL: 'PASTE_WORKER_URL_HERE',          // URL ของ Cloudflare Worker เช่น https://weekly-push.ชื่อ.workers.dev
-  VAPID_PUBLIC: 'PASTE_VAPID_PUBLIC_KEY_HERE',// กุญแจสาธารณะจาก vapid-keygen.html
+  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwStJd4U7FE42lzSWrSP8X3gNddLnfXAn_PyDRVhjpraYHNinUo9yN2K1ylWmSBS3aEfg/exec',
+  PUSH_URL: 'https://weekly-push.lao-genebank.workers.dev',
+  VAPID_PUBLIC: 'BJN95HLVOVK8DAIa3gI8RQkdHKOhJJssYaQ_igqgn5vfCSRpeF2Gtz-vyx7g_VGs-7ABgvC_bfSK3IIeWGJdoPM',
   DEFAULT_YEAR: 2026,
-  ORG: {                                       // ชื่อหน่วยงาน/ห้องการ แสดงเป็นหัวหน้า
+  ORG: {
     lo: 'ທະນາຄານເຊື້ອພັນ',
     en: 'Lao genebank',
     th: '***********'
@@ -86,7 +86,7 @@ const CFG = {
   YEARS: [2025,2026,2027,2028,2029,2030]
 };
 
-/* ============ ข้อความ 3 ภาษา ============ */
+/* ============ ຂໍ້ຄວາມ 3 ພາສາ ============ */
 const I18N = {
   appSub:{lo:'ລະບົບລາຍງານປະຈຳອາທິດ',en:'Weekly Report System',th:'ระบบรายงานประจำสัปดาห์'},
   selName:{lo:'ເລືອກຊື່ຂອງທ່ານ',en:'Select your name',th:'เลือกชื่อของคุณ'},
@@ -158,7 +158,7 @@ const I18N = {
 };
 const LANGS = [['lo','ລາວ'],['en','EN'],['th','ไทย']];
 
-/* ============ โครงสร้างหมวดข้อมูล ============ */
+/* ============ ໂຄງສ້າງໝວດຂໍ້ມູນ ============ */
 const SECTIONS = [
   {key:'done', fields:[
     {k:'t',label:'taskName',type:'input'},
@@ -182,7 +182,7 @@ const blank = key => ({
   highlights:{d:''}, problems:{d:''}, proposals:{d:''}
 }[key]);
 
-/* ============ ตัวช่วย ============ */
+/* ============ ຕົວຊ່ວຍ ============ */
 const $ = s => document.querySelector(s);
 const t = k => (I18N[k] && I18N[k][lang]) || k;
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -197,9 +197,9 @@ function toast(msg){
   clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove('show'), 2600);
 }
 
-/* ============ สถานะ ============ */
+/* ============ ສະຖານນະ ============ */
 let lang = store.get('wr_lang');
-if(!['lo','en','th'].includes(lang)) lang = 'lo';           // เริ่มต้นเป็นภาษาลาวเสมอ
+if(!['lo','en','th'].includes(lang)) lang = 'lo';
 let user = store.get('wr_user') || '';
 if(!CFG.USERS.includes(user)) user = '';
 let screen = user ? 'form' : 'login';
@@ -231,7 +231,7 @@ function saveDraft(now){
 }
 if(user) data = loadDraft(user) || newData();
 
-/* ============ วาดหน้าจอ ============ */
+/* ============ ແຕະໜ້າຈໍ ============ */
 function langBar(){
   return `<div class="langs">${LANGS.map(([c,n])=>`<button type="button" data-act="lang" data-v="${c}" class="${c===lang?'active':''}">${n}</button>`).join('')}</div>`;
 }
@@ -345,7 +345,7 @@ document.addEventListener('keydown', e => {
   if(e.key==='F5' || ((e.ctrlKey||e.metaKey) && k==='r')) e.preventDefault();
 });
 
-/* ============ เหตุการณ์ ============ */
+/* ============ ເຫດການ ============ */
 const app = $('#app');
 app.addEventListener('input', e => {
   const el = e.target;
@@ -391,7 +391,7 @@ app.addEventListener('click', e => {
   }
 });
 
-/* ============ แจ้งเตือนมือถือ (Web Push) ============ */
+/* ============ ການແຈ້ງເຕືອນ (Web Push) ============ */
 function notifSupported(){ return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; }
 function notifState(){
   if(!notifSupported()) return 'unsupported';
@@ -400,7 +400,7 @@ function notifState(){
   return 'off';
 }
 function notifCard(){
-  if(CFG.PUSH_URL.startsWith('PASTE_')) return '';   // ยังไม่เปิดใช้แจ้งเตือน → ไม่แสดงการ์ด
+  if(CFG.PUSH_URL.startsWith('PASTE_')) return '';
   const st = notifState();
   const msg = {unsupported:t('notifUnsupported'), denied:t('notifDenied'), on:t('notifOn'), off:t('notifHint')}[st];
   return `<div class="card"><h2>🔔 ${t('notifTitle')}</h2>
@@ -433,7 +433,7 @@ async function enableNotif(){
   }
 }
 
-/* ============ ส่งรายงาน ============ */
+/* ============ ສົ່ງລາຍງານ ============ */
 async function submit(){
   if(busy) return;
   const clean = key => data[key].filter(it => Object.entries(it).some(([k,v]) => k!=='pr' && String(v).trim()));
@@ -467,7 +467,7 @@ async function submit(){
   }
 }
 
-/* ============ เริ่มทำงาน ============ */
+/* ============ ເລີ່ມເຮັດວຽກ ============ */
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
 }
