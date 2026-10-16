@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f766e">
+<meta name="theme-color" id="metaTheme" content="#0f766e">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
@@ -14,23 +14,104 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;600;700&family=Noto+Sans+Thai:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+    /* ==================================================================
+     ສີຂອງລະບົບ — ແກ້ໄຂໂຄດສີໄດ້ຢູ່ 3 ສ່ວນຂ້າງລຸ່ມນີ້
+     ================================================================== */
+
+  /* [ສ່ວນ 1] ໂຄດສີຫຼັກຂອງແຕ່ລະຊຸດ
+     (ໃຊ້ເປັນແຖບດ້ານເທິງ, ປຸ່ມຫຼັກ ແລະ ວົງມົນເລືອກສີ) — ປ່ຽນໂຄດໄດ້ບ່ອນນີ້ບ່ອນດຽວ */
   :root{
-    --primary:#0f766e; --primary-dark:#115e59; --bg:#f1f5f4; --card:#fff;
-    --text:#1f2937; --muted:#6b7280; --line:#d1d5db; --danger:#dc2626;
+    --c-green:#0f766e;       /* ຂຽວ (ສີເດີມ) */
+    --c-periwinkle:#9381ff;  /* Soft Periwinkle */
+    --c-golden:#f9dc5c;      /* Golden Glow */
+    --c-pink:#ffb3c6;        /* Pink */
+  }
+
+  /* [ສ່ວນ 2] ສີຕົວໜັງສືທົ່ວໄປ (ໃຊ້ຮ່ວມກັນທຸກຊຸດສີ) — ເຂັ້ມຂຶ້ນເພື່ອໃຫ້ອ່ານງ່າຍ */
+  :root{
+    --card:#fff;
+    --text:#111827;    /* ຂໍ້ຄວາມຫຼັກ */
+    --muted:#4b5563;   /* ຂໍ້ຄວາມຮອງ / ປ້າຍຊື່ຊ່ອງ */
+    --line:#cbd5e1;    /* ເສັ້ນຂອບຊ່ອງ */
+    --danger:#b91c1c;  /* ປຸ່ມລຶບ */
+  }
+
+  /* [ສ່ວນ 3] ສີສະເພາະຂອງແຕ່ລະຊຸດ
+     --primary           ພື້ນແຖບເທິງ / ປຸ່ມຫຼັກ (ດຶງມາຈາກ ສ່ວນ 1)
+     --on-primary        ສີຕົວໜັງສືທີ່ວາງເທິງ --primary (ສີອ່ອນໃຫ້ໃຊ້ໜັງສືເຂັ້ມ)
+     --on-primary-line   ສີເສັ້ນຂອບວົງມົນ ແລະ ປຸ່ມພາສາເທິງແຖບ
+     --primary-dark      ສີຫົວຂໍ້ ແລະ ຂໍ້ຄວາມເນັ້ນ (ເຂັ້ມ ເພື່ອອ່ານງ່າຍເທິງພື້ນຂາວ)
+     --bg                ສີພື້ນຫຼັງຂອງໜ້າ
+     --soft, --soft-line ພື້ນ ແລະ ຂອບຂອງປຸ່ມ "ເພີ່ມລາຍການ" ແລະ ຊ່ອງທີ່ອ່ານຢ່າງດຽວ
+     --ring              ແສງຮອບຊ່ອງເວລາກົດພິມ */
+
+  /* ຂຽວ (ສີເດີມ) */
+  :root, :root[data-theme="green"]{
+    --primary:var(--c-green);
+    --on-primary:#ffffff;
+    --on-primary-line:rgba(255,255,255,.65);
+    --primary-dark:#115e59;
+    --bg:#f1f5f4;
+    --soft:#e6f4f2; --soft-line:#b7dcd7;
+    --ring:rgba(15,118,110,.20);
+  }
+  /* Soft Periwinkle */
+  :root[data-theme="periwinkle"]{
+    --primary:var(--c-periwinkle);
+    --on-primary:#160f3d;
+    --on-primary-line:rgba(22,15,61,.50);
+    --primary-dark:#3f2fa8;
+    --bg:#f5f3ff;
+    --soft:#eeebff; --soft-line:#cfc7ff;
+    --ring:rgba(147,129,255,.35);
+  }
+  /* Golden Glow */
+  :root[data-theme="golden"]{
+    --primary:var(--c-golden);
+    --on-primary:#3b2e00;
+    --on-primary-line:rgba(59,46,0,.50);
+    --primary-dark:#6e5200;
+    --bg:#fffbe8;
+    --soft:#fff7cc; --soft-line:#f0dc7a;
+    --ring:rgba(249,220,92,.55);
+  }
+  /* Pink */
+  :root[data-theme="pink"]{
+    --primary:var(--c-pink);
+    --on-primary:#4a0f25;
+    --on-primary-line:rgba(74,15,37,.50);
+    --primary-dark:#8f1d49;
+    --bg:#fff5f8;
+    --soft:#ffe9ef; --soft-line:#ffc9d7;
+    --ring:rgba(255,179,198,.55);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:'Noto Sans Lao','Noto Sans Thai','Inter',system-ui,sans-serif;font-size:16px;line-height:1.5;
     overscroll-behavior-y:contain; /* ກັນ pull-to-refresh ໃນມືຖື */}
   body{min-height:100vh;min-height:100dvh}
-  .topbar{position:sticky;top:0;z-index:10;background:var(--primary);color:#fff;
+  .topbar{position:sticky;top:0;z-index:10;background:var(--primary);color:var(--on-primary);
     display:flex;justify-content:space-between;align-items:center;gap:8px;
     padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top))}
-  .topbar .who{font-size:.85rem;opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .topbar .who{min-width:0;flex:1;font-size:.85rem;opacity:.9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tools{display:flex;align-items:center;gap:12px;flex-shrink:0;margin-left:auto}
   .langs{display:flex;gap:6px;flex-shrink:0}
-  .langs button{border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;
+  .langs button{border:1px solid var(--on-primary-line);background:transparent;color:var(--on-primary);
     border-radius:999px;padding:4px 12px;font:inherit;font-size:.85rem;cursor:pointer}
-  .langs button.active{background:#fff;color:var(--primary);font-weight:700}
+  .langs button.active{background:#fff;color:var(--primary-dark);border-color:#fff;font-weight:700}
+  /* ວົງມົນເລືອກສີ */
+  .themes{display:flex;align-items:center;gap:7px;flex-shrink:0}
+  .sw{position:relative;width:24px;height:24px;padding:0;border-radius:50%;cursor:pointer;
+    border:1.5px solid var(--on-primary-line);transition:transform .15s,box-shadow .15s}
+  .sw::after{content:"";position:absolute;inset:-5px}
+  .sw.active{box-shadow:0 0 0 2px var(--primary),0 0 0 4px var(--on-primary);transform:scale(.92)}
+  @media (max-width:420px){
+    .tools{gap:8px}
+    .themes{gap:5px}
+    .sw{width:21px;height:21px}
+    .langs{gap:4px}
+    .langs button{padding:4px 9px;font-size:.8rem}
+  }
   .wrap{max-width:640px;margin:0 auto;padding:16px 14px calc(40px + env(safe-area-inset-bottom))}
   .card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:16px}
   h1{margin:0;text-align:center;font-size:1.35rem;color:var(--primary-dark)}
@@ -42,8 +123,9 @@
   select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8'><path d='M1 1l6 6 6-6' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round'/></svg>");
     background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
   textarea{resize:vertical;min-height:84px}
-  select:focus,input:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(15,118,110,.15)}
-  input[readonly]{background:#eef2f1;color:var(--text);font-weight:600}
+  select:focus,input:focus,textarea:focus{border-color:var(--primary-dark);box-shadow:0 0 0 3px var(--ring)}
+  ::placeholder{color:#6b7280;opacity:1}
+  input[readonly]{background:var(--soft);color:var(--text);font-weight:600}
   .period{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
   .period label.lbl{margin-top:0}
   .item{border:1.5px dashed var(--line);border-radius:12px;padding:10px 12px 12px;margin-top:12px;background:#fafcfb}
@@ -51,11 +133,11 @@
   .item label.lbl{margin-top:8px}
   .rm{border:0;background:transparent;color:var(--danger);font:inherit;font-size:.85rem;cursor:pointer;padding:4px 8px}
   .btn{display:block;width:100%;border:0;border-radius:12px;padding:13px;font:inherit;font-size:1rem;font-weight:700;cursor:pointer}
-  .btn-primary{background:var(--primary);color:#fff}
+  .btn-primary{background:var(--primary);color:var(--on-primary)}
   .btn-primary:disabled{opacity:.6}
-  .btn-add{margin-top:12px;background:#e6f4f2;color:var(--primary-dark);border:1.5px solid #b7dcd7;padding:11px}
+  .btn-add{margin-top:12px;background:var(--soft);color:var(--primary-dark);border:1.5px solid var(--soft-line);padding:11px}
   .btn-out{background:transparent;color:var(--muted);border:1.5px solid var(--line);margin-top:10px;font-weight:600}
-  .logo-circle{width:64px;height:64px;border-radius:50%;background:var(--primary);color:#fff;
+  .logo-circle{width:64px;height:64px;border-radius:50%;background:var(--primary);color:var(--on-primary);
     display:flex;align-items:center;justify-content:center;font-size:30px;margin:6px auto 14px}
   .org{margin:0 0 2px;text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary-dark)}
   .saved{text-align:center;font-size:.8rem;color:var(--muted);height:1.2em;margin:-6px 0 10px}
@@ -64,6 +146,13 @@
     text-align:center;z-index:50;opacity:0;pointer-events:none;transition:opacity .2s}
   .toast.show{opacity:1}
   .big-ok{font-size:56px;text-align:center;margin:10px 0}
+  /* ກາດຮູບພາບລອຍຢູ່ດ້ານລຸ່ມໜ້າ "ສົ່ງລາຍງານສຳເລັດ" */
+  .pic-card{border-radius:24px;overflow:hidden;background:var(--soft);
+    box-shadow:0 12px 32px rgba(0,0,0,.14),0 2px 6px rgba(0,0,0,.06);
+    animation:floaty 5s ease-in-out infinite}
+  .pic-card img{display:block;width:100%;height:auto}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  @media (prefers-reduced-motion:reduce){.pic-card{animation:none}}
 </style>
 </head>
 <body>
@@ -83,7 +172,14 @@ const CFG = {
     th: 'National Gene Bank'
   },
   USERS: ['ທ ກູ່ຄຳ','ທ ເຂັມຄຳ','ທ ຄຳສອນ','ທ ຄຳປະດິດ','ທ ແກ້ວອຸດອນ','ນ ຄູນ','ນ ບຸນຊູ','ນ ອາລິດສະລາ','ທ ເລ່ເມີ້ນ','ທ ພອນທະວີ'],
-  YEARS: [2025,2026,2027,2028,2029,2030]
+  YEARS: [2025,2026,2027,2028,2029,2030],
+  /* ຊຸດສີ: id ຕ້ອງກົງກັບ --c-<id> ແລະ :root[data-theme="<id>"] ໃນ CSS (ລຳດັບນີ້ = ລຳດັບວົງມົນ) */
+  THEMES: [
+    {id:'green',      name:'Green'},
+    {id:'periwinkle', name:'Soft Periwinkle'},
+    {id:'golden',     name:'Golden Glow'},
+    {id:'pink',       name:'Pink'}
+  ]
 };
 
 /* ============ ຂໍ້ຄວາມ 3 ພາສາ ============ */
@@ -154,6 +250,7 @@ const I18N = {
                     en:'This device does not support notifications (install the app via Chrome first)',
                     th:'อุปกรณ์นี้ไม่รองรับการแจ้งเตือน (ให้ติดตั้งแอปผ่าน Chrome ก่อน)'},
   notifFail:{lo:'ເປີດການແຈ້ງເຕືອນບໍ່ສຳເລັດ ກະລຸນາລອງໃໝ່',en:'Could not turn on notifications. Please try again.',th:'เปิดการแจ้งเตือนไม่สำเร็จ กรุณาลองใหม่'},
+  themeLbl:{lo:'ສີຂອງລະບົບ',en:'Theme color',th:'สีของระบบ'},
   backLocked:{lo:'ຂໍ້ມູນຖືກບັນທຶກໄວ້ແລ້ວ ບໍ່ສາມາດຍ້ອນກັບໄດ້',en:'Your data is saved. Going back is disabled.',th:'ข้อมูลถูกบันทึกไว้แล้ว ไม่สามารถย้อนกลับได้'}
 };
 const LANGS = [['lo','ລາວ'],['en','EN'],['th','ไทย']];
@@ -207,6 +304,24 @@ let data = null;
 let pendingUser = '';
 let busy = false;
 
+/* ============ ສີຂອງລະບົບ (ຈົດຈຳຕາມຊື່ຜູ້ໃຊ້) ============ */
+const THEME_IDS = CFG.THEMES.map(x => x.id);
+let theme = store.get(user ? 'wr_theme_'+user : 'wr_theme_last');
+if(!THEME_IDS.includes(theme)) theme = store.get('wr_theme_last');
+if(!THEME_IDS.includes(theme)) theme = THEME_IDS[0];
+function setTheme(id, persist = true){
+  if(!THEME_IDS.includes(id)) return;
+  theme = id;
+  document.documentElement.dataset.theme = id;
+  const meta = $('#metaTheme');
+  if(meta) meta.content = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+  document.querySelectorAll('.sw').forEach(b => {
+    const on = b.dataset.v === id;
+    b.classList.toggle('active', on); b.setAttribute('aria-pressed', on);
+  });
+  if(persist){ store.set('wr_theme_last', id); if(user) store.set('wr_theme_'+user, id); }
+}
+
 function newData(){
   const d = new Date();
   const o = { week: Math.min(4, Math.floor((d.getDate()-1 + new Date(d.getFullYear(), d.getMonth(), 1).getDay())/7) + 1), month: d.getMonth()+1, year: CFG.DEFAULT_YEAR };
@@ -235,9 +350,13 @@ if(user) data = loadDraft(user) || newData();
 function langBar(){
   return `<div class="langs">${LANGS.map(([c,n])=>`<button type="button" data-act="lang" data-v="${c}" class="${c===lang?'active':''}">${n}</button>`).join('')}</div>`;
 }
+function themeBar(){
+  return `<div class="themes" role="group" aria-label="${esc(t('themeLbl'))}">${CFG.THEMES.map(x=>`<button type="button" class="sw ${x.id===theme?'active':''}" data-act="theme" data-v="${x.id}" style="background:var(--c-${x.id})" title="${esc(x.name)}" aria-label="${esc(x.name)}" aria-pressed="${x.id===theme}"></button>`).join('')}</div>`;
+}
+function toolsBar(){ return `<div class="tools">${themeBar()}${langBar()}</div>`; }
 function renderLogin(){
   return `
-  <div class="topbar"><span></span>${langBar()}</div>
+  <div class="topbar"><span></span>${toolsBar()}</div>
   <div class="wrap">
     <div class="card" style="margin-top:24px">
       <div class="logo-circle">📋</div>
@@ -286,7 +405,7 @@ function renderForm(){
   const years = CFG.YEARS.includes(+data.year) ? CFG.YEARS : [...CFG.YEARS, +data.year].sort();
   const yr = years.map(n=>`<option value="${n}" ${+data.year===n?'selected':''}>${n}</option>`).join('');
   return `
-  <div class="topbar"><span class="who">👤 ${esc(user)}</span>${langBar()}</div>
+  <div class="topbar"><span class="who">👤 ${esc(user)}</span>${toolsBar()}</div>
   <div class="wrap">
     <div class="card">
       <p class="org">${esc(CFG.ORG[lang])}</p>
@@ -308,7 +427,7 @@ function renderForm(){
 }
 function renderDone(){
   return `
-  <div class="topbar"><span class="who">👤 ${esc(user)}</span>${langBar()}</div>
+  <div class="topbar"><span class="who">👤 ${esc(user)}</span>${toolsBar()}</div>
   <div class="wrap"><div class="card" style="margin-top:24px">
     <div class="big-ok">✅</div>
     <h1>${t('okTitle')}</h1>
@@ -316,7 +435,9 @@ function renderDone(){
     <div style="height:18px"></div>
     <button type="button" class="btn btn-primary" data-act="newreport">${t('newReport')}</button>
     <button type="button" class="btn btn-out" data-act="logout">${t('logout')}</button>
-  </div></div>`;
+  </div>
+  <div class="pic-card"><img src="Images-gb.png" alt="" onerror="this.parentNode.style.display='none'"></div>
+  </div>`;
 }
 function render(){
   document.documentElement.lang = lang;
@@ -349,7 +470,7 @@ document.addEventListener('keydown', e => {
 const app = $('#app');
 app.addEventListener('input', e => {
   const el = e.target;
-  if(el.id==='userSel'){ pendingUser = el.value; return; }
+  if(el.id==='userSel'){ pendingUser = el.value; const st = store.get('wr_theme_'+el.value); if(THEME_IDS.includes(st)) setTheme(st, false); return; }
   const sec = el.dataset.sec; if(!sec || !data) return;
   data.sid = null;
   if(sec==='period'){ data[el.dataset.k] = +el.value; }
@@ -359,6 +480,7 @@ app.addEventListener('input', e => {
 app.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if(!b) return;
   const act = b.dataset.act;
+  if(act==='theme'){ setTheme(b.dataset.v); return; }
   if(act==='lang'){
     lang = b.dataset.v; store.set('wr_lang', lang);
     if(screen==='login'){ pendingUser = ($('#userSel')||{}).value || pendingUser; }
@@ -368,6 +490,7 @@ app.addEventListener('click', e => {
     const v = ($('#userSel')||{}).value || pendingUser;
     if(!v || !CFG.USERS.includes(v)){ toast(t('needName')); return; }
     user = v; store.set('wr_user', user);
+    { const st = store.get('wr_theme_'+v); setTheme(THEME_IDS.includes(st) ? st : theme); }
     data = loadDraft(user) || newData();
     screen = 'form'; lockNav(); render(); window.scrollTo(0,0);
   }
@@ -471,6 +594,7 @@ async function submit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
 }
+setTheme(theme, !!user);
 if(user) lockNav();
 render();
 </script>
