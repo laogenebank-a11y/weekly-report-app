@@ -21,7 +21,7 @@
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:'Noto Sans Lao','Noto Sans Thai','Inter',system-ui,sans-serif;font-size:16px;line-height:1.5;
-    overscroll-behavior-y:contain; /* กัน pull-to-refresh บนมือถือ */}
+    overscroll-behavior-y:contain; /* ກັນ pull-to-refresh ໃນມືຖື */}
   body{min-height:100vh;min-height:100dvh}
   .topbar{position:sticky;top:0;z-index:10;background:var(--primary);color:#fff;
     display:flex;justify-content:space-between;align-items:center;gap:8px;
@@ -78,11 +78,11 @@ const CFG = {
   VAPID_PUBLIC: 'BJN95HLVOVK8DAIa3gI8RQkdHKOhJJssYaQ_igqgn5vfCSRpeF2Gtz-vyx7g_VGs-7ABgvC_bfSK3IIeWGJdoPM',
   DEFAULT_YEAR: 2026,
   ORG: {
-    lo: 'ທະນາຄານເຊື້ອພັນ',
-    en: 'Lao genebank',
-    th: '***********'
+    lo: 'ທະນາຄານເຊື້ອພັນ ກະສິກຳແລະ ປ່າໄມ້',
+    en: 'National Gene Bank',
+    th: 'National Gene Bank'
   },
-  USERS: ['ກູ່ຄຳ','ເຂັມຄຳ','ຄຳສອນ','ຄຳປະດິດ','ແກ້ວອຸດອນ','ຄູນ','ບຸນຊູ','ອາລິດສະລາ','ເລ່ເມີ້ນ','ພອນທະວີ'],
+  USERS: ['ທ ກູ່ຄຳ','ທ ເຂັມຄຳ','ທ ຄຳສອນ','ທ ຄຳປະດິດ','ທ ແກ້ວອຸດອນ','ນ ຄູນ','ນ ບຸນຊູ','ນ ອາລິດສະລາ','ທ ເລ່ເມີ້ນ','ທ ພອນທະວີ'],
   YEARS: [2025,2026,2027,2028,2029,2030]
 };
 
@@ -104,7 +104,7 @@ const I18N = {
   sec_highlights:{lo:'4. ຈຸດເດັ່ນຂອງການປະຕິບັດວຽກອາທິດນີ້',en:'4. Highlights of this week',th:'4. จุดเด่นของการปฏิบัติงานสัปดาห์นี้'},
   sec_problems:{lo:'5. ບັນຫາ ແລະ ອຸປະສັກ',en:'5. Problems and obstacles',th:'5. ปัญหาและอุปสรรค'},
   sec_proposals:{lo:'6. ຂໍ້ສະເໜີ',en:'6. Proposals / support needed',th:'6. ข้อเสนอ / สิ่งที่ต้องการให้ช่วยเหลือ'},
-  taskName:{lo:'ຊື່ວຽກ ຫຼື ໂຄງການ',en:'Task / project name',th:'ชื่องาน หรือโครงการ'},
+  taskName:{lo:'ຊື່ວຽກ ຫຼື ໜ້າວຽກ',en:'Task / project name',th:'ชื่องาน หรือ หน้างาน'},
   detailDone:{lo:'ລາຍລະອຽດ ແລະ ຄວາມຄືບໜ້າທີ່ເຮັດແລ້ວ',en:'Details and what has been completed',th:'รายละเอียดและสิ่งที่ทำเสร็จแล้ว'},
   progress:{lo:'ຄວາມຄືບໜ້າ',en:'Progress',th:'ความคืบหน้า'},
   planDetail:{lo:'ລາຍລະອຽດແຜນງານ',en:'Plan details',th:'รายละเอียดแผนงาน'},
@@ -326,7 +326,7 @@ function render(){
   if(screen==='form'){ window.scrollTo(0,y); }
 }
 
-/* ============ ล็อกปุ่มย้อนกลับ / รีเฟรช ============ */
+/* ============ ບລ໋ອກປຸ່ມຍ້ອນກັບ / ລີເຊັດ ============ */
 function lockNav(){
   history.pushState({lock:1}, '', location.href);
   history.pushState({lock:2}, '', location.href);
@@ -351,7 +351,7 @@ app.addEventListener('input', e => {
   const el = e.target;
   if(el.id==='userSel'){ pendingUser = el.value; return; }
   const sec = el.dataset.sec; if(!sec || !data) return;
-  data.sid = null;                       // แก้ข้อมูลแล้ว = เป็นการส่งใหม่ (รหัสใหม่)
+  data.sid = null;
   if(sec==='period'){ data[el.dataset.k] = +el.value; }
   else { data[sec][+el.dataset.i][el.dataset.k] = el.value; }
   saveDraft();
@@ -457,7 +457,7 @@ async function submit(){
     const r = await fetch(CFG.SCRIPT_URL, { method:'POST', body: JSON.stringify(payload), signal: ctl.signal });
     const j = await r.json();
     if(!j.ok) throw new Error(j.error || 'failed');
-    store.del('wr_draft_'+user);             // ลบร่างเมื่อส่งสำเร็จแล้วเท่านั้น
+    store.del('wr_draft_'+user);
     data = null; screen = 'done'; render(); window.scrollTo(0,0);
   }catch(err){
     toast(t('fail'));
