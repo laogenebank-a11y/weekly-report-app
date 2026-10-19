@@ -25,6 +25,7 @@
     --c-periwinkle:#9381ff;  /* Soft Periwinkle */
     --c-golden:#f9dc5c;      /* Golden Glow */
     --c-pink:#ffb3c6;        /* Pink */
+    --c-PaleGreen:#9be9ba;   /* ຂຽວເບົາ (ໃຊ້ເພື່ອສະແດງຄວາມສໍາເລັດ) */
   }
 
   /* [ສ່ວນ 2] ສີຕົວໜັງສືທົ່ວໄປ (ໃຊ້ຮ່ວມກັນທຸກຊຸດສີ) — ເຂັ້ມຂຶ້ນເພື່ອໃຫ້ອ່ານງ່າຍ */
@@ -85,6 +86,16 @@
     --soft:#ffe9ef; --soft-line:#ffc9d7;
     --ring:rgba(255,179,198,.55);
   }
+  /*Pale Green*/
+:root[data-theme="Pale Green"]{
+  --primary:var(--c-PaleGreen);
+  --on-primary:#067432;                  /* ສີຕົວໜັງສືເທິງແຖບ */
+  --on-primary-line:rgba(61,31,0,.50);   /* ເສັ້ນຂອບວົງມົນ/ປຸ່ມພາສາ */
+  --primary-dark:#237745;                /* ສີຫົວຂໍ້ (ຕ້ອງເຂັ້ມ) */
+  --bg:#9be9ba;                          /* ພື້ນຫຼັງໜ້າ */
+  --soft:#9be9ba; --soft-line:#ffd2a3;   /* ປຸ່ມ "ເພີ່ມລາຍການ" */
+  --ring:rgba(255,159,69,.45);           /* ແສງຮອບຊ່ອງພິມ */
+}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family:'Noto Sans Lao','Noto Sans Thai','Inter',system-ui,sans-serif;font-size:16px;line-height:1.5;
