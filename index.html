@@ -176,7 +176,6 @@ const CFG = {
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwStJd4U7FE42lzSWrSP8X3gNddLnfXAn_PyDRVhjpraYHNinUo9yN2K1ylWmSBS3aEfg/exec',
   PUSH_URL: 'https://weekly-push.lao-genebank.workers.dev',
   VAPID_PUBLIC: 'BJN95HLVOVK8DAIa3gI8RQkdHKOhJJssYaQ_igqgn5vfCSRpeF2Gtz-vyx7g_VGs-7ABgvC_bfSK3IIeWGJdoPM',
-  DEFAULT_YEAR: 2026,
   ORG: {
     lo: 'ທະນາຄານເຊື້ອພັນ ກະສິກຳແລະ ປ່າໄມ້',
     en: 'National Gene Bank',
@@ -202,19 +201,22 @@ const I18N = {
   enter:{lo:'ເຂົ້າໃຊ້ງານ',en:'Enter',th:'เข้าใช้งาน'},
   needName:{lo:'ກະລຸນາເລືອກຊື່ກ່ອນ',en:'Please select your name first',th:'กรุณาเลือกชื่อก่อน'},
   repTitle:{lo:'ລາຍງານປະຈຳອາທິດ',en:'Weekly Report',th:'รายงานประจำสัปดาห์'},
-  week:{lo:'ອາທິດທີ',en:'Week',th:'สัปดาห์ที่'},
+  startDate:{lo:'ວັນທີເລີ່ມຕົ້ນຂອງອາທິດ (ວັນຈັນ)',en:'Week start date (Monday)',th:'วันที่เริ่มต้นของสัปดาห์ (วันจันทร์)'},
+  endDate:{lo:'ວັນທີສິ້ນສຸດຂອງອາທິດ (ວັນສຸກ)',en:'Week end date (Friday)',th:'วันที่สิ้นสุดของสัปดาห์ (วันศุกร์)'},
+  day:{lo:'ວັນທີ',en:'Day',th:'วันที่'},
+  badDate:{lo:'ວັນທີບໍ່ຖືກຕ້ອງ ກະລຸນາກວດວັນທີ ເດືອນ ປີ',en:'Invalid date. Please check day, month and year.',th:'วันที่ไม่ถูกต้อง กรุณาตรวจสอบวันที่ เดือน ปี'},
+  endBeforeStart:{lo:'ວັນທີສິ້ນສຸດຕ້ອງບໍ່ກ່ອນວັນທີເລີ່ມຕົ້ນ',en:'End date cannot be before the start date',th:'วันที่สิ้นสุดต้องไม่ก่อนวันที่เริ่มต้น'},
+  tooLong:{lo:'ໄລຍະເວລາຍາວເກີນ 31 ວັນ ກະລຸນາກວດວັນທີ',en:'The period is longer than 31 days. Please check the dates.',th:'ช่วงเวลายาวเกิน 31 วัน กรุณาตรวจสอบวันที่'},
   month:{lo:'ເດືອນ',en:'Month',th:'เดือน'},
   year:{lo:'ປີ',en:'Year',th:'ปี'},
   fullName:{lo:'ຊື່ ແລະ ນາມສະກຸນ',en:'Full name',th:'ชื่อ-นามสกุล'},
   sec_done:{lo:'1. ສະຫຼຸບຜົນງານທີ່ເຮັດສຳເລັດໃນອາທິດນີ້',en:'1. Accomplishments this week',th:'1. สรุปผลงานที่ทำสำเร็จในสัปดาห์นี้'},
-  sec_doing:{lo:'2. ວຽກທີ່ກຳລັງດຳເນີນຢູ່',en:'2. Work in progress',th:'2. งานที่อยู่ระหว่างดำเนินการ'},
-  sec_next:{lo:'3. ແຜນການດຳເນີນງານອາທິດຕໍ່ໄປ',en:'3. Plan for next week',th:'3. แผนการดำเนินงานสัปดาห์ถัดไป'},
-  sec_highlights:{lo:'4. ຈຸດເດັ່ນຂອງການປະຕິບັດວຽກອາທິດນີ້',en:'4. Highlights of this week',th:'4. จุดเด่นของการปฏิบัติงานสัปดาห์นี้'},
-  sec_problems:{lo:'5. ບັນຫາ ແລະ ອຸປະສັກ',en:'5. Problems and obstacles',th:'5. ปัญหาและอุปสรรค'},
-  sec_proposals:{lo:'6. ຂໍ້ສະເໜີ',en:'6. Proposals / support needed',th:'6. ข้อเสนอ / สิ่งที่ต้องการให้ช่วยเหลือ'},
+  sec_next:{lo:'2. ແຜນການດຳເນີນງານອາທິດຕໍ່ໄປ',en:'2. Plan for next week',th:'2. แผนการดำเนินงานสัปดาห์ถัดไป'},
+  sec_highlights:{lo:'3. ຈຸດເດັ່ນຂອງການປະຕິບັດວຽກອາທິດນີ້',en:'3. Highlights of this week',th:'3. จุดเด่นของการปฏิบัติงานสัปดาห์นี้'},
+  sec_problems:{lo:'4. ບັນຫາ ແລະ ອຸປະສັກ',en:'4. Problems and obstacles',th:'4. ปัญหาและอุปสรรค'},
+  sec_proposals:{lo:'5. ຂໍ້ສະເໜີ',en:'5. Proposals / support needed',th:'5. ข้อเสนอ / สิ่งที่ต้องการให้ช่วยเหลือ'},
   taskName:{lo:'ຊື່ວຽກ ຫຼື ໜ້າວຽກ',en:'Task / project name',th:'ชื่องาน หรือ หน้างาน'},
   detailDone:{lo:'ລາຍລະອຽດ ແລະ ຄວາມຄືບໜ້າທີ່ເຮັດແລ້ວ',en:'Details and what has been completed',th:'รายละเอียดและสิ่งที่ทำเสร็จแล้ว'},
-  progress:{lo:'ຄວາມຄືບໜ້າ',en:'Progress',th:'ความคืบหน้า'},
   planDetail:{lo:'ລາຍລະອຽດແຜນງານ',en:'Plan details',th:'รายละเอียดแผนงาน'},
   priority:{lo:'ລຳດັບຄວາມສຳຄັນ',en:'Priority',th:'ลำดับความสำคัญ'},
   high:{lo:'ສູງ',en:'High',th:'สูง'},
@@ -272,9 +274,6 @@ const SECTIONS = [
   {key:'done', fields:[
     {k:'t',label:'taskName',type:'input'},
     {k:'d',label:'detailDone',type:'textarea'}]},
-  {key:'doing', fields:[
-    {k:'t',label:'taskName',type:'input'},
-    {k:'p',label:'progress',type:'textarea'}]},
   {key:'next', fields:[
     {k:'t',label:'taskName',type:'input'},
     {k:'d',label:'planDetail',type:'textarea'},
@@ -287,7 +286,7 @@ const SECTIONS = [
     {k:'d',label:'proposalLbl',ph:'proposalPh',type:'textarea'}]}
 ];
 const blank = key => ({
-  done:{t:'',d:''}, doing:{t:'',p:''}, next:{t:'',d:'',pr:'mid'},
+  done:{t:'',d:''}, next:{t:'',d:'',pr:'mid'},
   highlights:{d:''}, problems:{d:''}, proposals:{d:''}
 }[key]);
 
@@ -334,9 +333,15 @@ function setTheme(id, persist = true){
   if(persist){ store.set('wr_theme_last', id); if(user) store.set('wr_theme_'+user, id); }
 }
 
+function defaultWeek(){
+  // ຈັນ-ສຸກ ຂອງອາທິດປັດຈຸບັນ (ຖ້າມື້ນີ້ເປັນວັນອາທິດ ໃຫ້ນັບເປັນອາທິດທີ່ຫາກໍ່ຈົບ)
+  const n = new Date(), dow = n.getDay();
+  const mon = new Date(n.getFullYear(), n.getMonth(), n.getDate() + (dow===0 ? -6 : 1-dow));
+  const fri = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 4);
+  return { sd:mon.getDate(), sm:mon.getMonth()+1, sy:mon.getFullYear(), ed:fri.getDate(), em:fri.getMonth()+1, ey:fri.getFullYear() };
+}
 function newData(){
-  const d = new Date();
-  const o = { week: Math.min(4, Math.floor((d.getDate()-1 + new Date(d.getFullYear(), d.getMonth(), 1).getDay())/7) + 1), month: d.getMonth()+1, year: CFG.DEFAULT_YEAR };
+  const o = defaultWeek();
   SECTIONS.forEach(s => o[s.key] = [blank(s.key)]);
   return o;
 }
@@ -345,6 +350,7 @@ function loadDraft(u){
     const raw = store.get('wr_draft_'+u);
     if(!raw) return null;
     const d = JSON.parse(raw);
+    if(!d.sd || !d.sm || !d.sy || !d.ed || !d.em || !d.ey) Object.assign(d, defaultWeek());   // ຮ່າງເກົ່າ (ແບບອາທິດທີ) → ໃຊ້ວັນທີຂອງອາທິດນີ້
     SECTIONS.forEach(s => { if(!Array.isArray(d[s.key]) || !d[s.key].length) d[s.key] = [blank(s.key)]; });
     return d;
   }catch(e){ return null; }
@@ -412,21 +418,25 @@ function sectionHTML(sec){
   </div>`;
 }
 function renderForm(){
-  const wk = [1,2,3,4].map(n=>`<option value="${n}" ${+data.week===n?'selected':''}>${n}</option>`).join('');
-  const mo = Array.from({length:12},(_,i)=>i+1).map(n=>`<option value="${n}" ${+data.month===n?'selected':''}>${n}</option>`).join('');
-  const years = CFG.YEARS.includes(+data.year) ? CFG.YEARS : [...CFG.YEARS, +data.year].sort();
-  const yr = years.map(n=>`<option value="${n}" ${+data.year===n?'selected':''}>${n}</option>`).join('');
+  const opts = (arr, cur) => arr.map(n=>`<option value="${n}" ${+cur===n?'selected':''}>${n}</option>`).join('');
+  const days = Array.from({length:31},(_,i)=>i+1);
+  const mons = Array.from({length:12},(_,i)=>i+1);
+  const yrs = cur => CFG.YEARS.includes(+cur) ? CFG.YEARS : [...CFG.YEARS, +cur].sort();
+  const row = (p, title) => `
+      <label class="lbl" style="margin-top:14px">${t(title)}</label>
+      <div class="period">
+        <div><label class="lbl" style="margin:0 0 2px">${t('day')}</label><select data-sec="period" data-k="${p}d">${opts(days,data[p+'d'])}</select></div>
+        <div><label class="lbl" style="margin:0 0 2px">${t('month')}</label><select data-sec="period" data-k="${p}m">${opts(mons,data[p+'m'])}</select></div>
+        <div><label class="lbl" style="margin:0 0 2px">${t('year')}</label><select data-sec="period" data-k="${p}y">${opts(yrs(data[p+'y']),data[p+'y'])}</select></div>
+      </div>`;
   return `
   <div class="topbar"><span class="who">👤 ${esc(user)}</span>${toolsBar()}</div>
   <div class="wrap">
     <div class="card">
       <p class="org">${esc(CFG.ORG[lang])}</p>
       <h1>${t('repTitle')}</h1>
-      <div class="period" style="margin-top:14px">
-        <div><label class="lbl">${t('week')}</label><select data-sec="period" data-k="week">${wk}</select></div>
-        <div><label class="lbl">${t('month')}</label><select data-sec="period" data-k="month">${mo}</select></div>
-        <div><label class="lbl">${t('year')}</label><select data-sec="period" data-k="year">${yr}</select></div>
-      </div>
+      ${row('s','startDate')}
+      ${row('e','endDate')}
       <label class="lbl">${t('fullName')}</label>
       <input type="text" value="${esc(user)}" readonly>
     </div>
@@ -573,13 +583,19 @@ async function submit(){
   if(busy) return;
   const clean = key => data[key].filter(it => Object.entries(it).some(([k,v]) => k!=='pr' && String(v).trim()));
   const payload = {
-    name: user, year: +data.year, month: +data.month, week: +data.week, lang,
-    done: clean('done'), doing: clean('doing'), next: clean('next'),
+    name: user, lang,
+    start: { d:+data.sd, m:+data.sm, y:+data.sy }, end: { d:+data.ed, m:+data.em, y:+data.ey },
+    done: clean('done'), next: clean('next'),
     highlights: clean('highlights'), problems: clean('problems'), proposals: clean('proposals')
   };
+  const ds = new Date(payload.start.y, payload.start.m-1, payload.start.d), de = new Date(payload.end.y, payload.end.m-1, payload.end.d);
+  const okD = (o,d) => d.getFullYear()===o.y && d.getMonth()===o.m-1 && d.getDate()===o.d;
+  if(!okD(payload.start,ds) || !okD(payload.end,de)){ toast(t('badDate')); return; }
+  if(de < ds){ toast(t('endBeforeStart')); return; }
+  if((de-ds)/86400000 > 31){ toast(t('tooLong')); return; }
   if(!data.sid) data.sid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36)+Math.random().toString(36).slice(2));
   payload.sid = data.sid;
-  const total = ['done','doing','next','highlights','problems','proposals'].reduce((n,k)=>n+payload[k].length,0);
+  const total = ['done','next','highlights','problems','proposals'].reduce((n,k)=>n+payload[k].length,0);
   if(!total){ toast(t('empty')); return; }
   if(!confirm(t('confirm'))) return;
   if(CFG.SCRIPT_URL.startsWith('PASTE_')){ toast(t('cfgMissing')); return; }
