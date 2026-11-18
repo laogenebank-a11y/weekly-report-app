@@ -359,7 +359,8 @@ const I18N = {
   userLbl:{lo:'ຊື່ຜູ້ໃຊ້ (ແກ້ໄຂບໍ່ໄດ້)',en:'User (cannot be changed)',th:'ชื่อผู้ใช้ (แก้ไขไม่ได้)'},
   langLbl:{lo:'ພາສາ',en:'Language',th:'ภาษา'},
   contactDev:{lo:'💬 ຕິດຕໍ່ຜູ້ພັດທະນາ',en:'💬 Contact the developer',th:'💬 ติดต่อผู้พัฒนา'},
-  version:{lo:'ເວີຊັນ',en:'Version',th:'เวอร์ชัน'}
+  version:{lo:'ເວີຊັນ',en:'Version',th:'เวอร์ชัน'},
+  allUsers:{lo:'ທຸກຄົນ',en:'Everyone',th:'ทุกคน'}
 };
 const LANGS = [['lo','ລາວ'],['en','EN'],['th','ไทย']];
 
@@ -559,10 +560,9 @@ async function loadHistory(){
 }
 async function loadAll(){
   const sel = allSel;
-  if(!sel){ allState = { list:null, loading:false, err:'' }; render(); return; }
   allState = { list:null, loading:true, err:'' }; render();
   try{
-    const j = await apiGet({ action:'all', name:user, user:sel });
+    const j = await apiGet(sel ? { action:'all', name:user, user:sel } : { action:'everyone', name:user });
     if(!j.ok) throw new Error(j.error || 'failed');
     if(sel !== allSel) return;
     allState = { list:j.reports || [], loading:false, err:'' };
@@ -746,14 +746,13 @@ function renderAll(){
     <div class="card">
       <label class="lbl" style="margin-top:0">${t('pickUser')}</label>
       <select id="allSel">
-        <option value="">${t('pickUserPh')}</option>
+        <option value="">${t('allUsers')}</option>
         ${CFG.USERS.map(u=>`<option value="${esc(u)}" ${u===allSel?'selected':''}>${esc(u)}</option>`).join('')}
       </select>
     </div>
-    ${!allSel ? `<p class="muted">${t('pickFirst')}</p>` : ''}
     ${allState.loading ? `<p class="muted">${t('loading')}</p>` : ''}
     ${allState.err ? `<div class="card"><p class="sub" style="margin:0 0 10px">${allState.err==='forbidden' ? t('noAccess') : t('loadFail')}</p><button type="button" class="btn btn-add" style="margin-top:0" data-act="reload">${t('retry')}</button></div>` : ''}
-    ${allSel && allState.list && !list.length ? `<p class="muted">${t('noHist')}</p>` : ''}
+    ${allState.list && !list.length ? `<p class="muted">${t('noHist')}</p>` : ''}
     ${list.map((r,i)=>histCard(r,i,true)).join('')}
   </div>`;
 }
@@ -819,7 +818,7 @@ function render(){
 function go(s){
   screen = s;
   if(s === 'notif'){ render(); loadHistory(); }
-  else if(s === 'all'){ render(); if(allSel) loadAll(); }
+  else if(s === 'all'){ loadAll(); }
   else render();
   window.scrollTo(0, 0);
 }
