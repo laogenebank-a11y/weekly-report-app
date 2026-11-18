@@ -2,7 +2,7 @@ const TITLE = 'ລາຍງານປະຈຳອາທິດ';
 const BODY = 'ທ່ານໄດ້ເຮັດລາຍງານແລ້ວບໍ?\nHave you done your weekly report?\nคุณทำรายงานประจำสัปดาห์แล้วหรือยัง?';
 
 // ປ່ຽນເລກເວີຊັນນີ້ທຸກຄັ້ງທີ່ຢາກບັງຄັບໃຫ້ເຄື່ອງທຸກເຄື່ອງລ້າງ cache ເກົ່າ
-const CACHE = 'wr-shell-v2';
+const CACHE = 'wr-shell-__BUILD__';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'Images-gb.png'];
 const FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 

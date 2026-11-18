@@ -232,6 +232,8 @@ const CFG = {
     th: 'National Gene Bank'
   },
   USERS: ['ທ ກູ່ຄຳ','ທ ເຂັມຄຳ','ທ ຄຳສອນ','ທ ຄຳປະດິດ','ທ ແກ້ວອຸດອນ','ນ ຄູນ','ນ ບຸນຊູ','ນ ອາລິດສະລາ','ທ ເລ່ເມີ້ນ','ທ ພອນທະວີ'],
+  VERSION: '2.0.0',
+  BUILD: '__BUILD__',
   ORG_SHORT: { lo: 'ທະນາຄານເຊື້ອພັນ', en: 'GENEBANK', th: 'GENEBANK' },
   // ຜູ້ມີສິດເຂົ້າເມນູ All Report (ຕ້ອງກົງກັບ ADMINS ໃນ Code.gs)
   ADMINS: ['ທ ກູ່ຄຳ','ທ ເຂັມຄຳ','ທ ເລ່ເມີ້ນ'],
@@ -357,6 +359,7 @@ const I18N = {
   userLbl:{lo:'ຊື່ຜູ້ໃຊ້ (ແກ້ໄຂບໍ່ໄດ້)',en:'User (cannot be changed)',th:'ชื่อผู้ใช้ (แก้ไขไม่ได้)'},
   langLbl:{lo:'ພາສາ',en:'Language',th:'ภาษา'},
   contactDev:{lo:'💬 ຕິດຕໍ່ຜູ້ພັດທະນາ',en:'💬 Contact the developer',th:'💬 ติดต่อผู้พัฒนา'}
+  version:{lo:'ເວີຊັນ',en:'Version',th:'เวอร์ชัน'}
 };
 const LANGS = [['lo','ລາວ'],['en','EN'],['th','ไทย']];
 
@@ -800,7 +803,8 @@ function renderSettings(){
       ${langBar()}
     </div>
     <a class="btn btn-add" style="margin-top:0" href="${esc(CFG.CONTACT_URL)}" target="_blank" rel="noopener">${t('contactDev')}</a>
-    <button type="button" class="btn btn-out" data-act="logout">${t('logout')}</button>
+        <button type="button" class="btn btn-out" data-act="logout">${t('logout')}</button>
+      <p class="hint">${t('version')} ${esc(CFG.VERSION)} (${esc(CFG.BUILD.startsWith('__') ? 'dev' : CFG.BUILD)})</p>
   </div>`;
 }
 
