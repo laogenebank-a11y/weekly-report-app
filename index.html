@@ -177,6 +177,19 @@
   .avatar.md{width:56px;height:56px;font-size:28px;border:2px solid var(--soft-line)}
   .hist.has-av{display:flex;align-items:center;gap:14px}
   .hist .hbody{flex:1;min-width:0}
+  /* ປ່ອງເບິ່ງຮູບ / ຕັດຮູບ */
+  .modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;
+    padding:16px;padding-top:calc(16px + env(safe-area-inset-top));padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+  .mbox{background:var(--card);border-radius:20px;padding:16px;width:100%;max-width:400px;max-height:100%;overflow:auto;text-align:center}
+  .mtitle{margin:0 0 12px;font-weight:700;color:var(--primary-dark)}
+  .view-img{display:block;width:100%;max-width:340px;aspect-ratio:1;object-fit:cover;border-radius:16px;margin:0 auto;background:var(--soft)}
+  .crop-wrap{position:relative;margin:0 auto;border-radius:12px;overflow:hidden;background:#111;touch-action:none;cursor:grab;user-select:none}
+  .crop-wrap:active{cursor:grabbing}
+  .crop-wrap canvas{display:block;width:100%;height:100%}
+  .crop-mask{position:absolute;inset:0;pointer-events:none;border-radius:50%;box-shadow:0 0 0 9999px rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.9)}
+  .crop-zoom{display:flex;align-items:center;gap:10px;margin:14px 0 6px;color:var(--muted);font-weight:700}
+  .crop-zoom input[type=range]{flex:1;accent-color:var(--primary-dark);margin:0}
+  .avatar.big{cursor:pointer}
   .hello{margin:0 0 14px;color:var(--muted);text-align:center;font-size:.95rem}
   .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .menu-card{position:relative;background:var(--card);border:1.5px solid var(--soft-line);border-radius:16px;
@@ -222,6 +235,7 @@
 <body>
 <div id="app"></div>
 <div id="toast" class="toast"></div>
+<div id="modal"></div>
 
 <script>
 
@@ -230,12 +244,12 @@ const CFG = {
   PUSH_URL: 'https://weekly-push.lao-genebank.workers.dev',
   VAPID_PUBLIC: 'BJN95HLVOVK8DAIa3gI8RQkdHKOhJJssYaQ_igqgn5vfCSRpeF2Gtz-vyx7g_VGs-7ABgvC_bfSK3IIeWGJdoPM',
   ORG: {
-    lo: 'ທະນາຄານເຊື້ອພັນ ກະສິກຳແລະ ປ່າໄມ້',
+    lo: 'ທະນາຄານເຊື້ອພັນ ກະສິກຳ ແລະ ປ່າໄມ້',
     en: 'National Gene Bank',
     th: 'National Gene Bank'
   },
   USERS: ['ທ ກູ່ຄຳ','ທ ເຂັມຄຳ','ທ ຄຳສອນ','ທ ຄຳປະດິດ','ທ ແກ້ວອຸດອນ','ນ ຄູນ','ນ ບຸນຊູ','ນ ອາລິດສະລາ','ທ ເລ່ເມີ້ນ','ທ ພອນທະວີ'],
-  VERSION: '2.1.0',
+  VERSION: '2.2.0',
   BUILD: '__BUILD__',
   ORG_SHORT: { lo: 'ທະນາຄານເຊື້ອພັນ', en: 'GENEBANK', th: 'GENEBANK' },
   // ຜູ້ມີສິດເຂົ້າເມນູ All Report (ຕ້ອງກົງກັບ ADMINS ໃນ Code.gs)
@@ -349,7 +363,7 @@ const I18N = {
   okQueuedTitle:{lo:'ບັນທຶກລາຍງານໄວ້ແລ້ວ',en:'Report saved',th:'บันทึกรายงานไว้แล้ว'},
   okQueuedSub:{lo:'ຍັງບໍ່ມີອິນເຕີເນັດ ລະບົບຈະສົ່ງໃຫ້ອັດຕະໂນມັດເມື່ອເຊື່ອມຕໍ່ໄດ້ (ເປີດແອັບໄວ້ ຫຼື ເປີດໃໝ່ຕອນມີເນັດ)',en:'No internet right now. It will be sent automatically once you are connected (keep the app open, or reopen it when online).',th:'ตอนนี้ไม่มีอินเทอร์เน็ต ระบบจะส่งให้อัตโนมัติเมื่อเชื่อมต่อได้ (เปิดแอปค้างไว้ หรือเปิดใหม่ตอนมีเน็ต)'},
   queueSent:{lo:'ສົ່ງລາຍງານທີ່ຄ້າງໄວ້ສຳເລັດແລ້ວ',en:'Pending report sent successfully',th:'ส่งรายงานที่ค้างไว้สำเร็จแล้ว'},
-  noAccess:{lo:'ທ່ານບໍ່ໄດ້ຮັບສິດໃຫ້ເຂົ້າເຖິງເມນູນີ້',en:'You do not have permission to access this menu',th:'คุณไม่ได้รับสิทธิ์เข้าถึงเมนูนี้'},
+  noAccess:{lo:'ທ່ານບໍ່ໄດ້ຮັບສິດໃຫ້ເຂົ້າເຖິງຂໍ້ມູນນີ້',en:'You do not have permission to access this data',th:'คุณไม่ได้รับสิทธิ์เข้าถึงข้อมูลนี้'},
   pickUser:{lo:'ເລືອກຜູ້ໃຊ້ທີ່ຕ້ອງການກວດລາຍງານ',en:'Choose whose reports to view',th:'เลือกผู้ใช้ที่ต้องการดูรายงาน'},
   pickUserPh:{lo:'-- ເລືອກຜູ້ໃຊ້ --',en:'-- Select user --',th:'-- เลือกผู้ใช้ --'},
   pickFirst:{lo:'ເລືອກຜູ້ໃຊ້ເພື່ອເບິ່ງລາຍງານ',en:'Select a user to view reports',th:'เลือกผู้ใช้เพื่อดูรายงาน'},
@@ -357,13 +371,25 @@ const I18N = {
   profilePhoto:{lo:'ຮູບໂປຣໄຟລ໌',en:'Profile picture',th:'รูปโปรไฟล์'},
   takePhoto:{lo:'📷 ຖ່າຍຮູບ',en:'📷 Take photo',th:'📷 ถ่ายรูป'},
   pickPhoto:{lo:'🖼 ເລືອກຈາກຄັງຮູບ',en:'🖼 Choose from gallery',th:'🖼 เลือกจากคลังรูป'},
-  photoHint:{lo:'ຮູບຖືກບັນທຶກຕາມຊື່ຜູ້ໃຊ້ ເຫັນໄດ້ທຸກເຄື່ອງທີ່ເຂົ້າດ້ວຍຊື່ນີ້',en:'The picture is saved to your user and shows on every device you log in with',th:'รูปถูกบันทึกตามชื่อผู้ใช้ เห็นได้ทุกเครื่องที่เข้าด้วยชื่อนี้'},
+  photoHint:{lo:'ແຕະຮູບເພື່ອເບິ່ງ ແລະ ບັນທຶກ · ຮູບຖືກບັນທຶກຕາມຊື່ຜູ້ໃຊ້ ເຫັນໄດ້ທຸກເຄື່ອງ',en:'Tap the picture to view and save it · It is saved to your user and shows on every device',th:'แตะรูปเพื่อดูและบันทึก · รูปถูกบันทึกตามชื่อผู้ใช้ เห็นได้ทุกเครื่อง'},
   photoFail:{lo:'ໃຊ້ຮູບນີ້ບໍ່ໄດ້ ກະລຸນາລອງຮູບອື່ນ',en:'Could not use this picture. Try another one.',th:'ใช้รูปนี้ไม่ได้ กรุณาลองรูปอื่น'},
   userLbl:{lo:'ຊື່ຜູ້ໃຊ້ (ແກ້ໄຂບໍ່ໄດ້)',en:'User (cannot be changed)',th:'ชื่อผู้ใช้ (แก้ไขไม่ได้)'},
   langLbl:{lo:'ພາສາ',en:'Language',th:'ภาษา'},
   contactDev:{lo:'💬 ຕິດຕໍ່ຜູ້ພັດທະນາ',en:'💬 Contact the developer',th:'💬 ติดต่อผู้พัฒนา'},
   version:{lo:'ເວີຊັນ',en:'Version',th:'เวอร์ชัน'},
   allUsers:{lo:'ທຸກຄົນ',en:'Everyone',th:'ทุกคน'},
+  savePhoto:{lo:'💾 ບັນທຶກຮູບ',en:'💾 Save photo',th:'💾 บันทึกรูป'},
+  editPhoto:{lo:'✂️ ແກ້ໄຂຮູບ',en:'✂️ Edit photo',th:'✂️ แก้ไขรูป'},
+  close:{lo:'ປິດ',en:'Close',th:'ปิด'},
+  cancel:{lo:'ຍົກເລີກ',en:'Cancel',th:'ยกเลิก'},
+  apply:{lo:'ໃຊ້ຮູບນີ້',en:'Use this photo',th:'ใช้รูปนี้'},
+  cropTitle:{lo:'ປັບຮູບໂປຣໄຟລ໌',en:'Adjust profile picture',th:'ปรับรูปโปรไฟล์'},
+  cropHint:{lo:'ລາກເພື່ອຍ້າຍຕຳແໜ່ງ · ບີບນິ້ວ ຫຼື ເລື່ອນແຖບເພື່ອຊູມ (ວົງມົນ = ສ່ວນທີ່ຈະສະແດງ)',
+            en:'Drag to move · pinch or use the slider to zoom (the circle is what will be shown)',
+            th:'ลากเพื่อย้ายตำแหน่ง · บีบนิ้วหรือเลื่อนแถบเพื่อซูม (วงกลม = ส่วนที่จะแสดง)'},
+  rotate:{lo:'↻ ໝຸນຮູບ',en:'↻ Rotate',th:'↻ หมุนรูป'},
+  resetCrop:{lo:'⟲ ຣີເຊັດ',en:'⟲ Reset',th:'⟲ รีเซ็ต'},
+  photoDownloaded:{lo:'ບັນທຶກຮູບລົງເຄື່ອງແລ້ວ',en:'Photo saved to your device',th:'บันทึกรูปลงเครื่องแล้ว'},
   avatarSaved:{lo:'ບັນທຶກຮູບໂປຣໄຟລ໌ແລ້ວ',en:'Profile picture saved',th:'บันทึกรูปโปรไฟล์แล้ว'},
   avatarPending:{lo:'ບັນທຶກໃນເຄື່ອງແລ້ວ ຈະສົ່ງຂຶ້ນລະບົບເມື່ອມີອິນເຕີເນັດ',en:'Saved on this device. It will upload when you are online.',th:'บันทึกในเครื่องแล้ว จะอัปโหลดเมื่อมีอินเทอร์เน็ต'}
 };
@@ -570,22 +596,159 @@ async function loadAvatars(force){
   }catch(e){}
   avBusy = false;
 }
-function setAvatar(file){
-  const url = URL.createObjectURL(file), img = new Image();
-  img.onload = () => {
-    const S = 192, c = document.createElement('canvas'); c.width = c.height = S;
-    const m = Math.min(img.width, img.height);
-    c.getContext('2d').drawImage(img, (img.width-m)/2, (img.height-m)/2, m, m, 0, 0, S, S);
-    URL.revokeObjectURL(url);
-    let q = .8, d = c.toDataURL('image/jpeg', q);
-    while(d.length > 40000 && q > .35){ q -= .1; d = c.toDataURL('image/jpeg', q); }
-    avatars[user] = d; saveAvatarCache();
-    store.set('wr_avpend_'+user, '1');
-    render();
-    uploadAvatar(false);
-  };
-  img.onerror = () => { URL.revokeObjectURL(url); toast(t('photoFail')); };
-  img.src = url;
+/* ບີບຮູບ (256px) ໃຫ້ນ້ອຍພໍ ແລ້ວບັນທຶກ + ສົ່ງຂຶ້ນ Drive */
+function commitAvatar(canvas){
+  let q = .85, d = canvas.toDataURL('image/jpeg', q);
+  while(d.length > 32000 && q > .35){ q -= .1; d = canvas.toDataURL('image/jpeg', q); }
+  if(d.length > 44000){ toast(t('photoFail')); return; }
+  avatars[user] = d; saveAvatarCache();
+  store.set('wr_avpend_'+user, '1');
+  render();
+  uploadAvatar(false);
+}
+
+/* ============ ປ່ອງເບິ່ງຮູບ / ຕັດຮູບ (modal) ============ */
+function modalOpen(){ return $('#modal').childElementCount > 0; }
+function modalKey(e){ if(e.key === 'Escape') closeModal(); }
+function closeModal(){
+  $('#modal').innerHTML = '';
+  document.body.style.overflow = '';
+  document.removeEventListener('keydown', modalKey);
+}
+function showModal(html){
+  const m = $('#modal');
+  m.innerHTML = html;
+  document.body.style.overflow = 'hidden';
+  document.addEventListener('keydown', modalKey);
+  return m.firstElementChild;
+}
+function downloadAvatar(){
+  const a = avatars[user]; if(!a) return;
+  const l = document.createElement('a');
+  l.href = a; l.download = 'profile-picture.jpg';
+  document.body.appendChild(l); l.click(); l.remove();
+  toast(t('photoDownloaded'));
+}
+function openViewer(){
+  const a = avatars[user];
+  if(!a){ const i = $('#avPick'); if(i) i.click(); return; }     // ຍັງບໍ່ມີຮູບ → ໄປເລືອກຮູບເລີຍ
+  const m = showModal(`<div class="modal" data-m="bg"><div class="mbox">
+    <p class="mtitle">${t('profilePhoto')}</p>
+    <img class="view-img" src="${esc(a)}" alt="">
+    <div class="two" style="margin-top:14px">
+      <button type="button" class="btn btn-add" data-m="save">${t('savePhoto')}</button>
+      <button type="button" class="btn btn-add" data-m="edit">${t('editPhoto')}</button>
+    </div>
+    <button type="button" class="btn btn-out" data-m="close">${t('close')}</button>
+  </div></div>`);
+  m.addEventListener('click', e => {
+    const b = e.target.closest('[data-m]'); if(!b) return;
+    const act = b.dataset.m;
+    if(act === 'bg' && e.target !== m) return;                    // ແຕະພື້ນຫຼັງມືດ = ປິດ
+    if(act === 'save') downloadAvatar();
+    else if(act === 'edit'){ const cur = avatars[user]; closeModal(); openCropper(cur); }
+    else closeModal();
+  });
+}
+function openCropper(source){
+  const isFile = typeof source !== 'string';
+  const url = isFile ? URL.createObjectURL(source) : source;
+  const im = new Image();
+  im.onload = () => { if(isFile) URL.revokeObjectURL(url); startCropper(im); };
+  im.onerror = () => { if(isFile) URL.revokeObjectURL(url); toast(t('photoFail')); };
+  im.src = url;
+}
+function startCropper(im){
+  // ຍ່ອຮູບຕົ້ນສະບັບ (ດ້ານຍາວສຸດ ≤ 1600px) ເພື່ອໃຫ້ລາກ/ຊູມລື່ນ
+  const k = Math.min(1, 1600 / Math.max(im.naturalWidth, im.naturalHeight));
+  let src = document.createElement('canvas');
+  src.width = Math.max(1, Math.round(im.naturalWidth * k));
+  src.height = Math.max(1, Math.round(im.naturalHeight * k));
+  src.getContext('2d').drawImage(im, 0, 0, src.width, src.height);
+
+  const V = Math.max(200, Math.min(320, window.innerWidth - 80));      // ຂະໜາດຊ່ອງຕັດ (px)
+  const m = showModal(`<div class="modal"><div class="mbox">
+    <p class="mtitle">${t('cropTitle')}</p>
+    <div class="crop-wrap" style="width:${V}px;height:${V}px"><canvas></canvas><div class="crop-mask"></div></div>
+    <div class="crop-zoom"><span>－</span><input type="range" min="1" max="4" step="0.01" value="1" aria-label="zoom"><span>＋</span></div>
+    <p class="hint" style="margin:0 0 12px">${t('cropHint')}</p>
+    <div class="two">
+      <button type="button" class="btn btn-add" data-m="rot">${t('rotate')}</button>
+      <button type="button" class="btn btn-add" data-m="reset">${t('resetCrop')}</button>
+    </div>
+    <div class="two" style="margin-top:10px">
+      <button type="button" class="btn btn-out" style="margin-top:0" data-m="cancel">${t('cancel')}</button>
+      <button type="button" class="btn btn-primary" data-m="apply">${t('apply')}</button>
+    </div>
+  </div></div>`);
+  const wrap = m.querySelector('.crop-wrap'), cv = m.querySelector('canvas'), zoom = m.querySelector('input[type=range]');
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = cv.height = Math.round(V * dpr);
+  const ctx = cv.getContext('2d');
+  let s = 1, base = 1, cx = V/2, cy = V/2;
+
+  const cover = () => V / Math.min(src.width, src.height);
+  function clamp(){                                   // ໃຫ້ຮູບປົກຄຸມຊ່ອງຕັດສະເໝີ ບໍ່ມີຂອບວ່າງ
+    const w = src.width * s, h = src.height * s;
+    cx = Math.min(w/2, Math.max(V - w/2, cx));
+    cy = Math.min(h/2, Math.max(V - h/2, cy));
+  }
+  function draw(){
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = '#111'; ctx.fillRect(0, 0, V, V);
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(src, cx - src.width*s/2, cy - src.height*s/2, src.width*s, src.height*s);
+  }
+  function reset(){ base = cover(); s = base; cx = V/2; cy = V/2; zoom.value = 1; clamp(); draw(); }
+  function setScale(ns, px, py){                      // ຊູມອ້ອມຈຸດ (px,py)
+    ns = Math.min(base * 4, Math.max(base, ns));
+    cx = px - (px - cx) * (ns / s); cy = py - (py - cy) * (ns / s); s = ns;
+    zoom.value = (s / base).toFixed(3); clamp(); draw();
+  }
+  function rotate(){
+    const r = document.createElement('canvas'); r.width = src.height; r.height = src.width;
+    const c = r.getContext('2d'); c.translate(r.width/2, r.height/2); c.rotate(Math.PI/2);
+    c.drawImage(src, -src.width/2, -src.height/2);
+    src = r; reset();
+  }
+
+  // ລາກ (1 ນິ້ວ/ເມົ້າສ໌) ແລະ ບີບນິ້ວ (2 ນິ້ວ)
+  const pts = new Map(); let lastD = 0;
+  const rel = e => { const r = wrap.getBoundingClientRect(); return { x:(e.clientX - r.left) * (V / r.width), y:(e.clientY - r.top) * (V / r.height) }; };
+  wrap.addEventListener('pointerdown', e => { wrap.setPointerCapture(e.pointerId); pts.set(e.pointerId, rel(e)); lastD = 0; });
+  wrap.addEventListener('pointermove', e => {
+    if(!pts.has(e.pointerId)) return;
+    const p = rel(e), prev = pts.get(e.pointerId);
+    if(pts.size === 1){ cx += p.x - prev.x; cy += p.y - prev.y; clamp(); draw(); }
+    pts.set(e.pointerId, p);
+    if(pts.size === 2){
+      const [a, b] = [...pts.values()], d = Math.hypot(a.x - b.x, a.y - b.y);
+      if(lastD) setScale(s * d / lastD, (a.x + b.x) / 2, (a.y + b.y) / 2);
+      lastD = d;
+    }
+  });
+  const up = e => { pts.delete(e.pointerId); lastD = 0; };
+  wrap.addEventListener('pointerup', up);
+  wrap.addEventListener('pointercancel', up);
+  wrap.addEventListener('wheel', e => { e.preventDefault(); const p = rel(e); setScale(s * (e.deltaY < 0 ? 1.08 : 1/1.08), p.x, p.y); }, { passive:false });
+  zoom.addEventListener('input', () => setScale(base * parseFloat(zoom.value), V/2, V/2));
+
+  m.addEventListener('click', e => {
+    const b = e.target.closest('[data-m]'); if(!b) return;
+    const act = b.dataset.m;
+    if(act === 'rot') rotate();
+    else if(act === 'reset') reset();
+    else if(act === 'cancel') closeModal();
+    else if(act === 'apply'){
+      const OUT = 256, f = OUT / V, out = document.createElement('canvas');
+      out.width = out.height = OUT;
+      const oc = out.getContext('2d'); oc.imageSmoothingQuality = 'high';
+      oc.fillStyle = '#fff'; oc.fillRect(0, 0, OUT, OUT);
+      oc.drawImage(src, (cx - src.width*s/2) * f, (cy - src.height*s/2) * f, src.width*s*f, src.height*s*f);
+      closeModal(); commitAvatar(out);
+    }
+  });
+  reset();
 }
 
 /* ============ ດຶງຂໍ້ມູນຈາກ Google Sheet ============ */
@@ -848,7 +1011,7 @@ function renderSettings(){
   <div class="wrap">
     <div class="card set-card">
       <h2 style="text-align:center">${t('profilePhoto')}</h2>
-      ${avatarHTML('big')}
+      <div data-act="avview" role="button" tabindex="0" style="width:112px;margin:0 auto;cursor:pointer" aria-label="${esc(t('profilePhoto'))}">${avatarHTML('big')}</div>
       <div class="two">
         <button type="button" class="btn btn-add" data-act="avcam">${t('takePhoto')}</button>
         <button type="button" class="btn btn-add" data-act="avpick">${t('pickPhoto')}</button>
@@ -899,6 +1062,7 @@ function lockNav(){
 }
 window.addEventListener('popstate', () => {
   if(!user) return;
+  if(modalOpen()){ closeModal(); history.pushState({lock:4}, '', location.href); return; }   // ມີປ່ອງຮູບເປີດຢູ່: ປຸ່ມຍ້ອນກັບ = ປິດປ່ອງ
   if(screen === 'menu' || screen === 'done' || screen === 'login') return;   // ໜ້າເມນູ: ປຸ່ມຍ້ອນກັບອອກຈາກແອັບໄດ້ຕາມປົກກະຕິ
   history.pushState({lock:3}, '', location.href);
   goBack();                                                                  // ໜ້າຍ່ອຍ: ຍ້ອນກັບ = ກັບເມນູ
@@ -932,7 +1096,7 @@ app.addEventListener('change', e => {
   const el = e.target;
   if(el.id === 'avCam' || el.id === 'avPick'){
     const f = el.files && el.files[0];
-    if(f) setAvatar(f);
+    if(f) openCropper(f);
     el.value = '';
   }
 });
@@ -966,6 +1130,7 @@ app.addEventListener('click', e => {
     if(curReport) go('detail');
   }
   else if(act === 'reload'){ screen === 'all' ? loadAll() : loadHistory(); }
+  else if(act === 'avview'){ openViewer(); }
   else if(act === 'avcam'){ const i = $('#avCam'); if(i) i.click(); }
   else if(act === 'avpick'){ const i = $('#avPick'); if(i) i.click(); }
   else if(act === 'add'){
