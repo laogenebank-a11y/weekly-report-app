@@ -174,6 +174,8 @@
     border:1.5px solid var(--on-primary-line);font-size:18px}
   .avatar img{width:100%;height:100%;object-fit:cover;display:block}
   .avatar.big{width:112px;height:112px;font-size:48px;margin:2px auto 14px;border:3px solid var(--primary)}
+  .avatar.sm{width:30px;height:30px;font-size:15px;border:1.5px solid var(--soft-line)}
+  .hn{display:flex;align-items:center;gap:8px;min-width:0}
   .hello{margin:0 0 14px;color:var(--muted);text-align:center;font-size:.95rem}
   .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .menu-card{position:relative;background:var(--card);border:1.5px solid var(--soft-line);border-radius:16px;
@@ -232,7 +234,7 @@ const CFG = {
     th: 'National Gene Bank'
   },
   USERS: ['ທ ກູ່ຄຳ','ທ ເຂັມຄຳ','ທ ຄຳສອນ','ທ ຄຳປະດິດ','ທ ແກ້ວອຸດອນ','ນ ຄູນ','ນ ບຸນຊູ','ນ ອາລິດສະລາ','ທ ເລ່ເມີ້ນ','ທ ພອນທະວີ'],
-  VERSION: '2.0.0',
+  VERSION: '2.1.0',
   BUILD: '__BUILD__',
   ORG_SHORT: { lo: 'ທະນາຄານເຊື້ອພັນ', en: 'GENEBANK', th: 'GENEBANK' },
   // ຜູ້ມີສິດເຂົ້າເມນູ All Report (ຕ້ອງກົງກັບ ADMINS ໃນ Code.gs)
@@ -354,13 +356,15 @@ const I18N = {
   profilePhoto:{lo:'ຮູບໂປຣໄຟລ໌',en:'Profile picture',th:'รูปโปรไฟล์'},
   takePhoto:{lo:'📷 ຖ່າຍຮູບ',en:'📷 Take photo',th:'📷 ถ่ายรูป'},
   pickPhoto:{lo:'🖼 ເລືອກຈາກຄັງຮູບ',en:'🖼 Choose from gallery',th:'🖼 เลือกจากคลังรูป'},
-  photoHint:{lo:'ຮູບຖືກເກັບໄວ້ໃນເຄື່ອງນີ້ເທົ່ານັ້ນ',en:'The picture is stored on this device only',th:'รูปถูกเก็บไว้ในเครื่องนี้เท่านั้น'},
+  photoHint:{lo:'ຮູບຖືກບັນທຶກຕາມຊື່ຜູ້ໃຊ້ ເຫັນໄດ້ທຸກເຄື່ອງທີ່ເຂົ້າດ້ວຍຊື່ນີ້',en:'The picture is saved to your user and shows on every device you log in with',th:'รูปถูกบันทึกตามชื่อผู้ใช้ เห็นได้ทุกเครื่องที่เข้าด้วยชื่อนี้'},
   photoFail:{lo:'ໃຊ້ຮູບນີ້ບໍ່ໄດ້ ກະລຸນາລອງຮູບອື່ນ',en:'Could not use this picture. Try another one.',th:'ใช้รูปนี้ไม่ได้ กรุณาลองรูปอื่น'},
   userLbl:{lo:'ຊື່ຜູ້ໃຊ້ (ແກ້ໄຂບໍ່ໄດ້)',en:'User (cannot be changed)',th:'ชื่อผู้ใช้ (แก้ไขไม่ได้)'},
   langLbl:{lo:'ພາສາ',en:'Language',th:'ภาษา'},
   contactDev:{lo:'💬 ຕິດຕໍ່ຜູ້ພັດທະນາ',en:'💬 Contact the developer',th:'💬 ติดต่อผู้พัฒนา'},
   version:{lo:'ເວີຊັນ',en:'Version',th:'เวอร์ชัน'},
-  allUsers:{lo:'ທຸກຄົນ',en:'Everyone',th:'ทุกคน'}
+  allUsers:{lo:'ທຸກຄົນ',en:'Everyone',th:'ทุกคน'},
+  avatarSaved:{lo:'ບັນທຶກຮູບໂປຣໄຟລ໌ແລ້ວ',en:'Profile picture saved',th:'บันทึกรูปโปรไฟล์แล้ว'},
+  avatarPending:{lo:'ບັນທຶກໃນເຄື່ອງແລ້ວ ຈະສົ່ງຂຶ້ນລະບົບເມື່ອມີອິນເຕີເນັດ',en:'Saved on this device. It will upload when you are online.',th:'บันทึกในเครื่องแล้ว จะอัปโหลดเมื่อมีอินเทอร์เน็ต'}
 };
 const LANGS = [['lo','ລາວ'],['en','EN'],['th','ไทย']];
 
@@ -515,19 +519,69 @@ async function flushQueue(){
 }
 
 /* ============ ຮູບໂປຣໄຟລ໌ ============ */
-function avatarHTML(cls){
-  const a = user ? store.get('wr_avatar_'+user) : null;
-  return `<span class="avatar ${cls||''}">${a ? `<img src="${esc(a)}" alt="">` : '👤'}</span>`;
+let avatars = {};
+try{ avatars = JSON.parse(store.get('wr_avatars') || '{}') || {}; }catch(e){ avatars = {}; }
+function saveAvatarCache(){ store.set('wr_avatars', JSON.stringify(avatars)); }
+function avatarInner(n){
+  const a = n && avatars[n];
+  return a ? `<img src="${esc(a)}" alt="">` : '👤';
+}
+function avatarHTML(cls, name){
+  const n = name || user;
+  return `<span class="avatar ${cls||''}" data-u="${esc(n)}">${avatarInner(n)}</span>`;
+}
+// ອັບເດດຮູບທີ່ສະແດງຢູ່ໜ້າຈໍເລີຍ ໂດຍບໍ່ render ໃໝ່ (ກັນຂໍ້ມູນໃນຟອມຫາຍ)
+function refreshAvatars(){
+  document.querySelectorAll('.avatar[data-u]').forEach(el => { el.innerHTML = avatarInner(el.dataset.u); });
+}
+// ສົ່ງຮູບຂອງຜູ້ໃຊ້ຂຶ້ນ Google Sheet (ເກັບຕາມຊື່ຜູ້ໃຊ້)
+async function uploadAvatar(silent){
+  if(!user || !avatars[user]) return;
+  const me = user;
+  const r = await postReport({ action:'avatar', name:me, img:avatars[me] });
+  if(r.ok){
+    store.del('wr_avpend_'+me); store.del('wr_avatar_'+me);
+    if(!silent) toast(t('avatarSaved'));
+  }else if(r.net){
+    if(!silent) toast(t('avatarPending'));        // ຍັງຄ້າງໄວ້ ຈະລອງສົ່ງໃໝ່ເອງ
+  }else{
+    store.del('wr_avpend_'+me);                   // ເຊີບເວີປະຕິເສດ ບໍ່ລອງຊ້ຳ
+    if(!silent) toast(t('photoFail'));
+  }
+}
+let avBusy = false, avLast = 0;
+async function loadAvatars(force){
+  if(!user || avBusy || navigator.onLine === false) return;
+  if(!force && Date.now() - avLast < 30000) return;
+  avBusy = true; avLast = Date.now();
+  try{
+    const j = await apiGet({ action:'avatars', name:user });
+    if(j.ok && j.avatars){
+      const me = user, pend = store.get('wr_avpend_'+me) === '1', mine = avatars[me];
+      avatars = j.avatars;
+      const old = store.get('wr_avatar_'+me);     // ຮູບແບບເກົ່າທີ່ເກັບໃນເຄື່ອງ
+      if(pend && mine) avatars[me] = mine;        // ຮູບທີ່ຫາກໍ່ປ່ຽນ ແລະ ຍັງສົ່ງບໍ່ສຳເລັດ
+      else if(old && !avatars[me]){ avatars[me] = old; store.set('wr_avpend_'+me, '1'); }
+      saveAvatarCache();
+      refreshAvatars();
+      if(store.get('wr_avpend_'+me) === '1') await uploadAvatar(true);
+    }
+  }catch(e){}
+  avBusy = false;
 }
 function setAvatar(file){
   const url = URL.createObjectURL(file), img = new Image();
   img.onload = () => {
-    const S = 256, c = document.createElement('canvas'); c.width = c.height = S;
+    const S = 192, c = document.createElement('canvas'); c.width = c.height = S;
     const m = Math.min(img.width, img.height);
     c.getContext('2d').drawImage(img, (img.width-m)/2, (img.height-m)/2, m, m, 0, 0, S, S);
     URL.revokeObjectURL(url);
-    store.set('wr_avatar_'+user, c.toDataURL('image/jpeg', .82));
+    let q = .8, d = c.toDataURL('image/jpeg', q);
+    while(d.length > 40000 && q > .35){ q -= .1; d = c.toDataURL('image/jpeg', q); }
+    avatars[user] = d; saveAvatarCache();
+    store.set('wr_avpend_'+user, '1');
     render();
+    uploadAvatar(false);
   };
   img.onerror = () => { URL.revokeObjectURL(url); toast(t('photoFail')); };
   img.src = url;
@@ -590,7 +644,7 @@ function offBar(){ return navigator.onLine === false ? `<div class="offbar">${t(
 
 function renderLogin(){
   return `
-  <div class="topbar"><span></span>${toolsBar()}</div>
+  <div class="topbar"><span></span></div>
   <div class="wrap">
     <div class="card" style="margin-top:24px">
       <div class="logo-circle">📋</div>
@@ -710,7 +764,7 @@ function weekStatus(list){
 const byNewest = (a,b) => a.stamp < b.stamp ? 1 : a.stamp > b.stamp ? -1 : 0;
 function histCard(r, i, showName){
   return `<button type="button" class="hist" data-act="open" data-i="${i}">
-    <div class="h1"><span>${showName ? '👤 '+esc(r.name)+' · ' : '📄 '}${fmtStamp(r.stamp)}</span>${r.pending ? `<span class="badge">${t('queuedBadge')}</span>` : ''}</div>
+    <div class="h1"><span class="hn">${showName ? avatarHTML('sm', r.name)+'<span>'+esc(r.name)+' · '+fmtStamp(r.stamp)+'</span>' : '<span>📄 '+fmtStamp(r.stamp)+'</span>'}</span>${r.pending ? `<span class="badge">${t('queuedBadge')}</span>` : ''}</div>
     <div class="h2">${t('period')}: ${fmtD(r.start)} – ${fmtD(r.end)}</div>
   </button>`;
 }
@@ -818,7 +872,7 @@ function render(){
 function go(s){
   screen = s;
   if(s === 'notif'){ render(); loadHistory(); }
-  else if(s === 'all'){ loadAll(); }
+  else if(s === 'all'){ loadAll(); loadAvatars(); }
   else render();
   window.scrollTo(0, 0);
 }
@@ -843,13 +897,13 @@ window.addEventListener('beforeunload', e => {
   if(user && screen === 'form'){ saveDraft(true); e.preventDefault(); e.returnValue = ''; }
 });
 window.addEventListener('pagehide', () => saveDraft(true));
-document.addEventListener('visibilitychange', () => { if(document.hidden) saveDraft(true); else flushQueue(); });
+document.addEventListener('visibilitychange', () => { if(document.hidden) saveDraft(true); else { flushQueue(); loadAvatars(); } });
 document.addEventListener('keydown', e => {
   if(!user || screen !== 'form') return;
   const k = e.key.toLowerCase();
   if(e.key === 'F5' || ((e.ctrlKey||e.metaKey) && k === 'r')) e.preventDefault();
 });
-window.addEventListener('online', () => { render(); flushQueue(); });
+window.addEventListener('online', () => { render(); flushQueue(); loadAvatars(true); });
 window.addEventListener('offline', () => render());
 
 /* ============ ເຫດການ ============ */
@@ -887,7 +941,7 @@ app.addEventListener('click', e => {
     user = v; store.set('wr_user', user);
     { const st = store.get('wr_theme_'+v); setTheme(THEME_IDS.includes(st) ? st : theme); }
     data = null; hist = { list:null, loading:false, err:false }; allSel = ''; allState = { list:null, loading:false, err:'' };
-    lockNav(); go('menu'); flushQueue();
+    lockNav(); go('menu'); flushQueue(); loadAvatars(true);
   }
   else if(act === 'nav'){
     const to = b.dataset.to;
@@ -1024,6 +1078,7 @@ setTheme(theme, !!user);
 if(user) lockNav();
 render();
 flushQueue();
+loadAvatars(true);
 
 </script>
 </body>
