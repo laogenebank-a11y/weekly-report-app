@@ -164,6 +164,56 @@
   .pic-card img{display:block;width:100%;height:auto}
   @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   @media (prefers-reduced-motion:reduce){.pic-card{animation:none}}
+
+  /* ================== ສ່ວນເພີ່ມ: ເມນູ, ປະຫວັດ, ຕັ້ງຄ່າ ================== */
+  .topbar .back{width:34px;height:34px;padding:0;border-radius:50%;border:1px solid var(--on-primary-line);
+    background:transparent;color:var(--on-primary);font-size:1.3rem;line-height:1;cursor:pointer;flex-shrink:0}
+  .topbar .ttl{flex:1;min-width:0;font-weight:700;font-size:1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--soft);color:var(--primary-dark);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;
+    border:1.5px solid var(--on-primary-line);font-size:18px}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .avatar.big{width:112px;height:112px;font-size:48px;margin:2px auto 14px;border:3px solid var(--primary)}
+  .hello{margin:0 0 14px;color:var(--muted);text-align:center;font-size:.95rem}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .menu-card{position:relative;background:var(--card);border:1.5px solid var(--soft-line);border-radius:16px;
+    padding:22px 10px;text-align:center;font:inherit;font-weight:700;font-size:1rem;color:var(--primary-dark);
+    cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .menu-card:active{background:var(--soft)}
+  .menu-card .ic{display:block;font-size:36px;line-height:1.2;margin-bottom:6px}
+  .menu-card .dot{position:absolute;top:8px;right:10px;background:var(--danger);color:#fff;border-radius:999px;
+    font-size:.72rem;min-width:20px;padding:0 6px;line-height:20px}
+  .sect{margin:18px 2px 8px}
+  .muted{color:var(--muted);font-size:.92rem;text-align:center;margin:10px 0}
+  .status{border-radius:12px;padding:11px 14px;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .status.ok{background:#dcfce7;color:#14532d}
+  .status.no{background:#fee2e2;color:#7f1d1d}
+  .status.pend{background:#fef3c7;color:#78350f}
+  .offbar{background:#fef3c7;color:#78350f;border-radius:12px;padding:9px 12px;font-size:.88rem;margin-bottom:12px}
+  .hist{display:block;width:100%;text-align:left;font:inherit;background:var(--card);border:1.5px solid var(--line);
+    border-radius:14px;padding:12px 14px;margin-bottom:10px;cursor:pointer;color:var(--text)}
+  .hist:active{background:var(--soft)}
+  .hist .h1{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;color:var(--primary-dark)}
+  .hist .h2{margin-top:2px;font-size:.88rem;color:var(--muted)}
+  .badge{font-size:.72rem;font-weight:700;border-radius:999px;padding:2px 10px;background:#fef3c7;color:#78350f;white-space:nowrap}
+  .meta{margin:6px 0 0;font-size:.9rem;color:var(--muted)}
+  .ritem{padding:10px 0;border-top:1px solid var(--soft-line)}
+  .ritem:first-of-type{border-top:0;padding-top:4px}
+  .rt{font-weight:700}
+  .rd{white-space:pre-wrap;word-break:break-word}
+  .pri{display:inline-block;margin-top:6px;font-size:.78rem;font-weight:700;border-radius:999px;padding:2px 10px}
+  .pri-high{background:#fee2e2;color:#7f1d1d}
+  .pri-mid{background:#fef3c7;color:#78350f}
+  .pri-low{background:#dcfce7;color:#14532d}
+  a.btn{text-align:center;text-decoration:none}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .two .btn-add{margin-top:0}
+  .set-card .langs button{color:var(--primary-dark);border-color:var(--soft-line)}
+  .set-card .langs button.active{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+  .set-card .themes{gap:12px;flex-wrap:wrap}
+  .set-card .sw{width:34px;height:34px;border-color:rgba(0,0,0,.25)}
+  .set-card .sw.active{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--primary-dark);transform:none}
+  .hint{margin:8px 0 0;font-size:.82rem;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
@@ -182,6 +232,10 @@ const CFG = {
     th: 'National Gene Bank'
   },
   USERS: ['ທ ກູ່ຄຳ','ທ ເຂັມຄຳ','ທ ຄຳສອນ','ທ ຄຳປະດິດ','ທ ແກ້ວອຸດອນ','ນ ຄູນ','ນ ບຸນຊູ','ນ ອາລິດສະລາ','ທ ເລ່ເມີ້ນ','ທ ພອນທະວີ'],
+  ORG_SHORT: { lo: 'ທະນາຄານເຊື້ອພັນ', en: 'GENEBANK', th: 'GENEBANK' },
+  // ຜູ້ມີສິດເຂົ້າເມນູ All Report (ຕ້ອງກົງກັບ ADMINS ໃນ Code.gs)
+  ADMINS: ['ທ ກູ່ຄຳ','ທ ເຂັມຄຳ','ທ ເລ່ເມີ້ນ'],
+  CONTACT_URL: 'https://wa.me/message/3DBQPVIRZ2HSC1',
   YEARS: [2025,2026,2027,2028,2029,2030],
   /* ຊຸດສີ: id ຕ້ອງກົງກັບ --c-<id> ແລະ :root[data-theme="<id>"] ໃນ CSS (ລຳດັບນີ້ = ລຳດັບວົງມົນ) */
   THEMES: [
@@ -265,7 +319,44 @@ const I18N = {
                     th:'อุปกรณ์นี้ไม่รองรับการแจ้งเตือน (ให้ติดตั้งแอปผ่าน Chrome ก่อน)'},
   notifFail:{lo:'ເປີດການແຈ້ງເຕືອນບໍ່ສຳເລັດ ກະລຸນາລອງໃໝ່',en:'Could not turn on notifications. Please try again.',th:'เปิดการแจ้งเตือนไม่สำเร็จ กรุณาลองใหม่'},
   themeLbl:{lo:'ສີຂອງລະບົບ',en:'Theme color',th:'สีของระบบ'},
-  backLocked:{lo:'ຂໍ້ມູນຖືກບັນທຶກໄວ້ແລ້ວ ບໍ່ສາມາດຍ້ອນກັບໄດ້',en:'Your data is saved. Going back is disabled.',th:'ข้อมูลถูกบันทึกไว้แล้ว ไม่สามารถย้อนกลับได้'}
+  backLocked:{lo:'ຂໍ້ມູນຖືກບັນທຶກໄວ້ແລ້ວ ບໍ່ສາມາດຍ້ອນກັບໄດ້',en:'Your data is saved. Going back is disabled.',th:'ข้อมูลถูกบันทึกไว้แล้ว ไม่สามารถย้อนกลับได้'},
+  menuTitle:{lo:'ເມນູຫຼັກ',en:'Main menu',th:'เมนูหลัก'},
+  hello:{lo:'ສະບາຍດີ',en:'Hello',th:'สวัสดี'},
+  menuReport:{lo:'ລາຍງານ',en:'Report',th:'รายงาน'},
+  menuNotif:{lo:'ການແຈ້ງເຕືອນ',en:'Notifications',th:'การแจ้งเตือน'},
+  menuAll:{lo:'All Report',en:'All Report',th:'All Report'},
+  menuSettings:{lo:'ຕັ້ງຄ່າ',en:'Settings',th:'ตั้งค่า'},
+  back:{lo:'ຍ້ອນກັບ',en:'Back',th:'ย้อนกลับ'},
+  backMenu:{lo:'ກັບໄປເມນູ',en:'Back to menu',th:'กลับไปเมนู'},
+  histTitle:{lo:'ປະຫວັດການສົ່ງລາຍງານ',en:'Submission history',th:'ประวัติการส่งรายงาน'},
+  noHist:{lo:'ຍັງບໍ່ມີປະຫວັດການສົ່ງລາຍງານ',en:'No reports submitted yet',th:'ยังไม่มีประวัติการส่งรายงาน'},
+  wkOk:{lo:'✓ ອາທິດນີ້ທ່ານສົ່ງລາຍງານແລ້ວ',en:'✓ You have submitted this week\'s report',th:'✓ สัปดาห์นี้คุณส่งรายงานแล้ว'},
+  wkNo:{lo:'⚠ ອາທິດນີ້ທ່ານຍັງບໍ່ໄດ້ສົ່ງລາຍງານ',en:'⚠ You have not submitted this week\'s report yet',th:'⚠ สัปดาห์นี้คุณยังไม่ได้ส่งรายงาน'},
+  wkPend:{lo:'⏳ ບັນທຶກລາຍງານອາທິດນີ້ແລ້ວ ລໍຖ້າສົ່ງເມື່ອມີອິນເຕີເນັດ',en:'⏳ This week\'s report is saved and will be sent when you are online',th:'⏳ บันทึกรายงานสัปดาห์นี้แล้ว รอส่งเมื่อมีอินเทอร์เน็ต'},
+  period:{lo:'ໄລຍະເວລາ',en:'Period',th:'ช่วงเวลา'},
+  sentAt:{lo:'ວັນທີສົ່ງ',en:'Submitted',th:'วันที่ส่ง'},
+  queuedBadge:{lo:'ລໍຖ້າສົ່ງ',en:'Pending',th:'รอส่ง'},
+  loading:{lo:'ກຳລັງໂຫຼດ...',en:'Loading...',th:'กำลังโหลด...'},
+  loadFail:{lo:'ໂຫຼດຂໍ້ມູນບໍ່ໄດ້ ກວດອິນເຕີເນັດແລ້ວລອງໃໝ່',en:'Could not load data. Check your connection and try again.',th:'โหลดข้อมูลไม่ได้ ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่'},
+  offlineCached:{lo:'ບໍ່ມີອິນເຕີເນັດ ກຳລັງສະແດງຂໍ້ມູນທີ່ບັນທຶກໄວ້ໃນເຄື່ອງ',en:'You are offline. Showing data saved on this device.',th:'ไม่มีอินเทอร์เน็ต กำลังแสดงข้อมูลที่บันทึกไว้ในเครื่อง'},
+  retry:{lo:'ລອງໃໝ່',en:'Try again',th:'ลองใหม่'},
+  offBar:{lo:'📴 ບໍ່ມີອິນເຕີເນັດ — ຍັງຕື່ມ ແລະ ກົດສົ່ງລາຍງານໄດ້ ລະບົບຈະສົ່ງໃຫ້ເມື່ອເຊື່ອມຕໍ່',en:'📴 You are offline — you can still fill in and submit; it will be sent when you reconnect',th:'📴 ไม่มีอินเทอร์เน็ต — ยังกรอกและกดส่งได้ ระบบจะส่งให้เมื่อเชื่อมต่อ'},
+  okQueuedTitle:{lo:'ບັນທຶກລາຍງານໄວ້ແລ້ວ',en:'Report saved',th:'บันทึกรายงานไว้แล้ว'},
+  okQueuedSub:{lo:'ຍັງບໍ່ມີອິນເຕີເນັດ ລະບົບຈະສົ່ງໃຫ້ອັດຕະໂນມັດເມື່ອເຊື່ອມຕໍ່ໄດ້ (ເປີດແອັບໄວ້ ຫຼື ເປີດໃໝ່ຕອນມີເນັດ)',en:'No internet right now. It will be sent automatically once you are connected (keep the app open, or reopen it when online).',th:'ตอนนี้ไม่มีอินเทอร์เน็ต ระบบจะส่งให้อัตโนมัติเมื่อเชื่อมต่อได้ (เปิดแอปค้างไว้ หรือเปิดใหม่ตอนมีเน็ต)'},
+  queueSent:{lo:'ສົ່ງລາຍງານທີ່ຄ້າງໄວ້ສຳເລັດແລ້ວ',en:'Pending report sent successfully',th:'ส่งรายงานที่ค้างไว้สำเร็จแล้ว'},
+  noAccess:{lo:'ທ່ານບໍ່ໄດ້ຮັບສິດໃຫ້ເຂົ້າເຖິງເມນູນີ້',en:'You do not have permission to access this menu',th:'คุณไม่ได้รับสิทธิ์เข้าถึงเมนูนี้'},
+  pickUser:{lo:'ເລືອກຜູ້ໃຊ້ທີ່ຕ້ອງການກວດລາຍງານ',en:'Choose whose reports to view',th:'เลือกผู้ใช้ที่ต้องการดูรายงาน'},
+  pickUserPh:{lo:'-- ເລືອກຜູ້ໃຊ້ --',en:'-- Select user --',th:'-- เลือกผู้ใช้ --'},
+  pickFirst:{lo:'ເລືອກຜູ້ໃຊ້ເພື່ອເບິ່ງລາຍງານ',en:'Select a user to view reports',th:'เลือกผู้ใช้เพื่อดูรายงาน'},
+  readOnly:{lo:'ອ່ານໄດ້ຢ່າງດຽວ ບໍ່ສາມາດແກ້ໄຂ ຫຼື ລຶບໄດ້',en:'Read-only: cannot be edited or deleted',th:'อ่านได้อย่างเดียว ไม่สามารถแก้ไขหรือลบได้'},
+  profilePhoto:{lo:'ຮູບໂປຣໄຟລ໌',en:'Profile picture',th:'รูปโปรไฟล์'},
+  takePhoto:{lo:'📷 ຖ່າຍຮູບ',en:'📷 Take photo',th:'📷 ถ่ายรูป'},
+  pickPhoto:{lo:'🖼 ເລືອກຈາກຄັງຮູບ',en:'🖼 Choose from gallery',th:'🖼 เลือกจากคลังรูป'},
+  photoHint:{lo:'ຮູບຖືກເກັບໄວ້ໃນເຄື່ອງນີ້ເທົ່ານັ້ນ',en:'The picture is stored on this device only',th:'รูปถูกเก็บไว้ในเครื่องนี้เท่านั้น'},
+  photoFail:{lo:'ໃຊ້ຮູບນີ້ບໍ່ໄດ້ ກະລຸນາລອງຮູບອື່ນ',en:'Could not use this picture. Try another one.',th:'ใช้รูปนี้ไม่ได้ กรุณาลองรูปอื่น'},
+  userLbl:{lo:'ຊື່ຜູ້ໃຊ້ (ແກ້ໄຂບໍ່ໄດ້)',en:'User (cannot be changed)',th:'ชื่อผู้ใช้ (แก้ไขไม่ได้)'},
+  langLbl:{lo:'ພາສາ',en:'Language',th:'ภาษา'},
+  contactDev:{lo:'💬 ຕິດຕໍ່ຜູ້ພັດທະນາ',en:'💬 Contact the developer',th:'💬 ติดต่อผู้พัฒนา'}
 };
 const LANGS = [['lo','ລາວ'],['en','EN'],['th','ไทย']];
 
@@ -305,15 +396,20 @@ function toast(msg){
   clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove('show'), 2600);
 }
 
-/* ============ ສະຖານນະ ============ */
+/* ============ ສະຖານະ ============ */
 let lang = store.get('wr_lang');
 if(!['lo','en','th'].includes(lang)) lang = 'lo';
 let user = store.get('wr_user') || '';
 if(!CFG.USERS.includes(user)) user = '';
-let screen = user ? 'form' : 'login';
+// ຈື່ການ login: ມີຊື່ໃນເຄື່ອງ = ເຂົ້າໜ້າເມນູເລີຍ ຈົນກວ່າຈະກົດ "ອອກຈາກລະບົບ"
+let screen = user ? 'menu' : 'login';
 let data = null;
 let pendingUser = '';
 let busy = false;
+let doneQueued = false;
+let curReport = null, curBack = 'notif', viewList = [];
+let hist = { list:null, loading:false, err:false };
+let allSel = '', allState = { list:null, loading:false, err:'' };
 
 /* ============ ສີຂອງລະບົບ (ຈົດຈຳຕາມຊື່ຜູ້ໃຊ້) ============ */
 const THEME_IDS = CFG.THEMES.map(x => x.id);
@@ -333,6 +429,15 @@ function setTheme(id, persist = true){
   if(persist){ store.set('wr_theme_last', id); if(user) store.set('wr_theme_'+user, id); }
 }
 
+/* ============ ວັນທີ ============ */
+const pad2 = n => String(n).padStart(2,'0');
+const ymd = o => o.y+'-'+pad2(o.m)+'-'+pad2(o.d);
+const fmtD = s => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s||''); return m ? m[3]+'/'+m[2]+'/'+m[1] : (s||''); };
+const fmtStamp = s => { const m = /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/.exec(s||''); return m ? m[3]+'/'+m[2]+'/'+m[1]+' '+m[4]+':'+m[5] : fmtD(s); };
+function nowStamp(){
+  const d = new Date();
+  return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate())+' '+pad2(d.getHours())+':'+pad2(d.getMinutes())+':'+pad2(d.getSeconds());
+}
 function defaultWeek(){
   // ຈັນ-ສຸກ ຂອງອາທິດປັດຈຸບັນ (ຖ້າມື້ນີ້ເປັນວັນອາທິດ ໃຫ້ນັບເປັນອາທິດທີ່ຫາກໍ່ຈົບ)
   const n = new Date(), dow = n.getDay();
@@ -340,6 +445,8 @@ function defaultWeek(){
   const fri = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 4);
   return { sd:mon.getDate(), sm:mon.getMonth()+1, sy:mon.getFullYear(), ed:fri.getDate(), em:fri.getMonth()+1, ey:fri.getFullYear() };
 }
+
+/* ============ ຮ່າງລາຍງານ ============ */
 function newData(){
   const o = defaultWeek();
   SECTIONS.forEach(s => o[s.key] = [blank(s.key)]);
@@ -350,7 +457,7 @@ function loadDraft(u){
     const raw = store.get('wr_draft_'+u);
     if(!raw) return null;
     const d = JSON.parse(raw);
-    if(!d.sd || !d.sm || !d.sy || !d.ed || !d.em || !d.ey) Object.assign(d, defaultWeek());   // ຮ່າງເກົ່າ (ແບບອາທິດທີ) → ໃຊ້ວັນທີຂອງອາທິດນີ້
+    if(!d.sd || !d.sm || !d.sy || !d.ed || !d.em || !d.ey) Object.assign(d, defaultWeek());
     SECTIONS.forEach(s => { if(!Array.isArray(d[s.key]) || !d[s.key].length) d[s.key] = [blank(s.key)]; });
     return d;
   }catch(e){ return null; }
@@ -362,9 +469,108 @@ function saveDraft(now){
   clearTimeout(saveTimer);
   if(now) run(); else saveTimer = setTimeout(run, 300);
 }
-if(user) data = loadDraft(user) || newData();
 
-/* ============ ແຕະໜ້າຈໍ ============ */
+/* ============ ຄິວສົ່ງລາຍງານ (ໃຊ້ຕອນອອບລາຍ) ============ */
+function getQ(){ try{ const q = JSON.parse(store.get('wr_queue') || '[]'); return Array.isArray(q) ? q : []; }catch(e){ return []; } }
+function setQ(q){ store.set('wr_queue', JSON.stringify(q)); }
+function myQ(){ return getQ().filter(x => x.payload && x.payload.name === user); }
+function pendingToReport(it){
+  const p = it.payload;
+  return { sid:p.sid, stamp:it.ts, start:ymd(p.start), end:ymd(p.end), name:p.name,
+    done:p.done||[], next:p.next||[], highlights:p.highlights||[], problems:p.problems||[], proposals:p.proposals||[], pending:true };
+}
+// ສົ່ງ 1 ລາຍງານ: {ok} ສຳເລັດ | {net:true} ເນັດຂາດ/ໝົດເວລາ (ຄວນລອງໃໝ່) | {err} ເຊີບເວີປະຕິເສດ
+async function postReport(payload){
+  const ctl = new AbortController();
+  const to = setTimeout(() => ctl.abort(), 25000);
+  try{
+    const r = await fetch(CFG.SCRIPT_URL, { method:'POST', body: JSON.stringify(payload), signal: ctl.signal });
+    const j = await r.json();
+    return j.ok ? { ok:true } : { err: j.error || 'failed' };
+  }catch(e){ return { net:true }; }
+  finally{ clearTimeout(to); }
+}
+let flushing = false;
+async function flushQueue(){
+  if(flushing || busy || navigator.onLine === false) return;
+  if(!getQ().length) return;
+  flushing = true; let sent = 0;
+  try{
+    for(const it of getQ()){
+      const r = await postReport(it.payload);
+      if(r.net) break;                                   // ເນັດຍັງບໍ່ດີ ລໍຖ້າຮອບຕໍ່ໄປ
+      setQ(getQ().filter(x => x.payload.sid !== it.payload.sid));   // ສຳເລັດ ຫຼື ເຊີບເວີປະຕິເສດຖາວອນ → ເອົາອອກຈາກຄິວ
+      if(r.ok) sent++;
+    }
+  } finally { flushing = false; }
+  if(sent){
+    toast(t('queueSent'));
+    if(screen === 'notif') loadHistory(); else hist.list = null;
+    if(screen === 'done' || screen === 'notif') render();
+  }
+}
+
+/* ============ ຮູບໂປຣໄຟລ໌ ============ */
+function avatarHTML(cls){
+  const a = user ? store.get('wr_avatar_'+user) : null;
+  return `<span class="avatar ${cls||''}">${a ? `<img src="${esc(a)}" alt="">` : '👤'}</span>`;
+}
+function setAvatar(file){
+  const url = URL.createObjectURL(file), img = new Image();
+  img.onload = () => {
+    const S = 256, c = document.createElement('canvas'); c.width = c.height = S;
+    const m = Math.min(img.width, img.height);
+    c.getContext('2d').drawImage(img, (img.width-m)/2, (img.height-m)/2, m, m, 0, 0, S, S);
+    URL.revokeObjectURL(url);
+    store.set('wr_avatar_'+user, c.toDataURL('image/jpeg', .82));
+    render();
+  };
+  img.onerror = () => { URL.revokeObjectURL(url); toast(t('photoFail')); };
+  img.src = url;
+}
+
+/* ============ ດຶງຂໍ້ມູນຈາກ Google Sheet ============ */
+async function apiGet(params){
+  const ctl = new AbortController();
+  const to = setTimeout(() => ctl.abort(), 20000);
+  try{
+    const r = await fetch(CFG.SCRIPT_URL + '?' + new URLSearchParams(params), { signal: ctl.signal });
+    return await r.json();
+  } finally { clearTimeout(to); }
+}
+async function loadHistory(){
+  if(!user) return;
+  const me = user, ck = 'wr_hist_'+me;
+  if(!hist.list){ try{ hist.list = JSON.parse(store.get(ck) || 'null'); }catch(e){ hist.list = null; } }
+  hist.loading = true; hist.err = false;
+  if(screen === 'notif') render();
+  try{
+    const j = await apiGet({ action:'history', name:me });
+    if(!j.ok) throw new Error(j.error || 'failed');
+    if(me !== user) return;
+    hist.list = j.reports || [];
+    store.set(ck, JSON.stringify(hist.list));
+  }catch(e){ hist.err = true; }
+  hist.loading = false;
+  if(screen === 'notif') render();
+}
+async function loadAll(){
+  const sel = allSel;
+  if(!sel){ allState = { list:null, loading:false, err:'' }; render(); return; }
+  allState = { list:null, loading:true, err:'' }; render();
+  try{
+    const j = await apiGet({ action:'all', name:user, user:sel });
+    if(!j.ok) throw new Error(j.error || 'failed');
+    if(sel !== allSel) return;
+    allState = { list:j.reports || [], loading:false, err:'' };
+  }catch(e){
+    if(sel !== allSel) return;
+    allState = { list:null, loading:false, err:String((e && e.message) || 'failed') };
+  }
+  if(screen === 'all') render();
+}
+
+/* ============ ສ່ວນປະກອບໜ້າຈໍ ============ */
 function langBar(){
   return `<div class="langs">${LANGS.map(([c,n])=>`<button type="button" data-act="lang" data-v="${c}" class="${c===lang?'active':''}">${n}</button>`).join('')}</div>`;
 }
@@ -372,6 +578,13 @@ function themeBar(){
   return `<div class="themes" role="group" aria-label="${esc(t('themeLbl'))}">${CFG.THEMES.map(x=>`<button type="button" class="sw ${x.id===theme?'active':''}" data-act="theme" data-v="${x.id}" style="background:var(--c-${x.id})" title="${esc(x.name)}" aria-label="${esc(x.name)}" aria-pressed="${x.id===theme}"></button>`).join('')}</div>`;
 }
 function toolsBar(){ return `<div class="tools">${themeBar()}${langBar()}</div>`; }
+function topbar(title, showBack){
+  return `<div class="topbar">${showBack
+    ? `<button type="button" class="back" data-act="back" aria-label="${esc(t('back'))}">‹</button>`
+    : avatarHTML()}<span class="ttl">${esc(title)}</span>${showBack ? avatarHTML() : ''}</div>`;
+}
+function offBar(){ return navigator.onLine === false ? `<div class="offbar">${t('offBar')}</div>` : ''; }
+
 function renderLogin(){
   return `
   <div class="topbar"><span></span>${toolsBar()}</div>
@@ -391,6 +604,27 @@ function renderLogin(){
     </div>
   </div>`;
 }
+
+function renderMenu(){
+  const pend = myQ().length;
+  const card = (to, ic, label, extra) => `<button type="button" class="menu-card" data-act="nav" data-to="${to}"><span class="ic">${ic}</span>${t(label)}${extra||''}</button>`;
+  return `
+  ${topbar(user, false)}
+  <div class="wrap">
+    ${offBar()}
+    <div class="card">
+      <p class="org">${esc(CFG.ORG[lang])}</p>
+      <h1>${t('menuTitle')}</h1>
+    </div>
+    <div class="menu-grid">
+      ${card('form','📝','menuReport')}
+      ${card('notif','🔔','menuNotif', pend ? `<span class="dot">${pend}</span>` : '')}
+      ${card('all','📊','menuAll')}
+      ${card('settings','⚙️','menuSettings')}
+    </div>
+  </div>`;
+}
+
 function fieldHTML(sec,i,f,it){
   const base = `data-sec="${sec.key}" data-i="${i}" data-k="${f.k}"`;
   const lbl = `<label class="lbl">${t(f.label)}</label>`;
@@ -418,6 +652,7 @@ function sectionHTML(sec){
   </div>`;
 }
 function renderForm(){
+  if(!data) data = loadDraft(user) || newData();
   const opts = (arr, cur) => arr.map(n=>`<option value="${n}" ${+cur===n?'selected':''}>${n}</option>`).join('');
   const days = Array.from({length:31},(_,i)=>i+1);
   const mons = Array.from({length:12},(_,i)=>i+1);
@@ -430,8 +665,9 @@ function renderForm(){
         <div><label class="lbl" style="margin:0 0 2px">${t('year')}</label><select data-sec="period" data-k="${p}y">${opts(yrs(data[p+'y']),data[p+'y'])}</select></div>
       </div>`;
   return `
-  <div class="topbar"><span class="who">👤 ${esc(user)}</span>${toolsBar()}</div>
+  ${topbar(t('menuReport'), true)}
   <div class="wrap">
+    ${offBar()}
     <div class="card">
       <p class="org">${esc(CFG.ORG[lang])}</p>
       <h1>${t('repTitle')}</h1>
@@ -442,97 +678,247 @@ function renderForm(){
     </div>
     <div class="saved" id="savedInfo"></div>
     ${SECTIONS.map(sectionHTML).join('')}
-    ${notifCard()}
     <button type="button" class="btn btn-primary" id="submitBtn" data-act="submit">${t('submit')}</button>
-    <button type="button" class="btn btn-out" data-act="logout">${t('logout')}</button>
   </div>`;
 }
+
 function renderDone(){
   return `
-  <div class="topbar"><span class="who">👤 ${esc(user)}</span>${toolsBar()}</div>
+  <div class="topbar"><span class="who">👤 ${esc(user)}</span></div>
   <div class="wrap"><div class="card" style="margin-top:24px">
-    <div class="big-ok">✅</div>
-    <h1>${t('okTitle')}</h1>
-    <p class="sub">${t('okSub')}</p>
+    <div class="big-ok">${doneQueued ? '⏳' : '✅'}</div>
+    <h1>${t(doneQueued ? 'okQueuedTitle' : 'okTitle')}</h1>
+    <p class="sub">${t(doneQueued ? 'okQueuedSub' : 'okSub')}</p>
     <div style="height:18px"></div>
     <button type="button" class="btn btn-primary" data-act="newreport">${t('newReport')}</button>
-    <button type="button" class="btn btn-out" data-act="logout">${t('logout')}</button>
+    <button type="button" class="btn btn-out" data-act="tomenu">${t('backMenu')}</button>
   </div>
   <div class="pic-card"><img src="Images-gb.png" alt="" onerror="this.parentNode.style.display='none'"></div>
   </div>`;
 }
+
+/* ----- ການແຈ້ງເຕືອນ = ປະຫວັດການສົ່ງ ----- */
+function weekStatus(list){
+  const w = defaultWeek();
+  const mon = ymd({y:w.sy,m:w.sm,d:w.sd}), fri = ymd({y:w.ey,m:w.em,d:w.ed});
+  const hit = list.find(r => r.start <= fri && r.end >= mon);
+  return hit ? (hit.pending ? 'pend' : 'ok') : 'no';
+}
+const byNewest = (a,b) => a.stamp < b.stamp ? 1 : a.stamp > b.stamp ? -1 : 0;
+function histCard(r, i, showName){
+  return `<button type="button" class="hist" data-act="open" data-i="${i}">
+    <div class="h1"><span>${showName ? '👤 '+esc(r.name)+' · ' : '📄 '}${fmtStamp(r.stamp)}</span>${r.pending ? `<span class="badge">${t('queuedBadge')}</span>` : ''}</div>
+    <div class="h2">${t('period')}: ${fmtD(r.start)} – ${fmtD(r.end)}</div>
+  </button>`;
+}
+function renderNotif(){
+  const pend = myQ().map(pendingToReport);
+  const srv = (hist.list || []).filter(r => !pend.some(p => p.sid === r.sid));
+  const list = pend.concat(srv).sort(byNewest);
+  viewList = list;
+  const s = weekStatus(list);
+  const status = (hist.list !== null || s === 'pend') ? `<div class="status ${s}">${t({ok:'wkOk',no:'wkNo',pend:'wkPend'}[s])}</div>` : '';
+  return `
+  ${topbar(t('menuNotif'), true)}
+  <div class="wrap">
+    ${offBar()}
+    <div class="card" style="text-align:center"><p class="org" style="font-size:1.35rem;margin:0">${esc(CFG.ORG_SHORT[lang])}</p></div>
+    ${notifCard()}
+    ${status}
+    <h2 class="sect">${t('histTitle')}</h2>
+    ${hist.loading ? `<p class="muted">${t('loading')}</p>` : ''}
+    ${hist.err ? `<div class="card"><p class="sub" style="margin:0 0 10px">${t(hist.list ? 'offlineCached' : 'loadFail')}</p><button type="button" class="btn btn-add" style="margin-top:0" data-act="reload">${t('retry')}</button></div>` : ''}
+    ${list.length ? list.map((r,i)=>histCard(r,i,false)).join('') : (!hist.loading && !hist.err ? `<p class="muted">${t('noHist')}</p>` : '')}
+  </div>`;
+}
+
+/* ----- All Report (ສະເພາະຜູ້ມີສິດ) ----- */
+function renderAll(){
+  const list = allState.list || [];
+  viewList = list;
+  return `
+  ${topbar(t('menuAll'), true)}
+  <div class="wrap">
+    ${offBar()}
+    <div class="card">
+      <label class="lbl" style="margin-top:0">${t('pickUser')}</label>
+      <select id="allSel">
+        <option value="">${t('pickUserPh')}</option>
+        ${CFG.USERS.map(u=>`<option value="${esc(u)}" ${u===allSel?'selected':''}>${esc(u)}</option>`).join('')}
+      </select>
+    </div>
+    ${!allSel ? `<p class="muted">${t('pickFirst')}</p>` : ''}
+    ${allState.loading ? `<p class="muted">${t('loading')}</p>` : ''}
+    ${allState.err ? `<div class="card"><p class="sub" style="margin:0 0 10px">${allState.err==='forbidden' ? t('noAccess') : t('loadFail')}</p><button type="button" class="btn btn-add" style="margin-top:0" data-act="reload">${t('retry')}</button></div>` : ''}
+    ${allSel && allState.list && !list.length ? `<p class="muted">${t('noHist')}</p>` : ''}
+    ${list.map((r,i)=>histCard(r,i,true)).join('')}
+  </div>`;
+}
+
+/* ----- ລາຍລະອຽດລາຍງານ (ອ່ານຢ່າງດຽວ) ----- */
+function renderDetail(){
+  const r = curReport;
+  if(!r) return renderMenu();
+  const head = `<div class="card"><h2>👤 ${esc(r.name)}</h2>
+    <p class="meta">${t('sentAt')}: ${fmtStamp(r.stamp)}<br>${t('period')}: ${fmtD(r.start)} – ${fmtD(r.end)}</p>
+    <p class="meta">🔒 ${t('readOnly')}</p></div>`;
+  const secs = SECTIONS.map(sec => {
+    const list = r[sec.key] || [];
+    if(!list.length) return '';
+    return `<div class="card"><h2>${t('sec_'+sec.key)}</h2>${list.map(it => `
+      <div class="ritem">
+        ${it.t ? `<div class="rt">${esc(it.t)}</div>` : ''}
+        <div class="rd">${esc(it.d)}</div>
+        ${it.pr ? `<span class="pri pri-${esc(it.pr)}">${t('priority')}: ${t(it.pr)}</span>` : ''}
+      </div>`).join('')}</div>`;
+  }).join('');
+  return `${topbar(t('menuReport'), true)}<div class="wrap">${head}${secs}</div>`;
+}
+
+/* ----- ຕັ້ງຄ່າ ----- */
+function renderSettings(){
+  return `
+  ${topbar(t('menuSettings'), true)}
+  <div class="wrap">
+    <div class="card set-card">
+      <h2 style="text-align:center">${t('profilePhoto')}</h2>
+      ${avatarHTML('big')}
+      <div class="two">
+        <button type="button" class="btn btn-add" data-act="avcam">${t('takePhoto')}</button>
+        <button type="button" class="btn btn-add" data-act="avpick">${t('pickPhoto')}</button>
+      </div>
+      <p class="hint">${t('photoHint')}</p>
+      <input type="file" id="avCam" accept="image/*" capture="user" hidden>
+      <input type="file" id="avPick" accept="image/*" hidden>
+    </div>
+    <div class="card set-card">
+      <label class="lbl" style="margin-top:0">${t('userLbl')}</label>
+      <input type="text" value="${esc(user)}" readonly>
+      <label class="lbl">${t('themeLbl')}</label>
+      ${themeBar()}
+      <label class="lbl">${t('langLbl')}</label>
+      ${langBar()}
+    </div>
+    <a class="btn btn-add" style="margin-top:0" href="${esc(CFG.CONTACT_URL)}" target="_blank" rel="noopener">${t('contactDev')}</a>
+    <button type="button" class="btn btn-out" data-act="logout">${t('logout')}</button>
+  </div>`;
+}
+
+const SCREENS = { login:renderLogin, menu:renderMenu, form:renderForm, notif:renderNotif, all:renderAll, detail:renderDetail, settings:renderSettings, done:renderDone };
 function render(){
   document.documentElement.lang = lang;
   document.title = t('repTitle');
   const y = window.scrollY;
-  $('#app').innerHTML = screen==='login' ? renderLogin() : screen==='done' ? renderDone() : renderForm();
-  if(screen==='form'){ window.scrollTo(0,y); }
+  $('#app').innerHTML = (SCREENS[screen] || renderMenu)();
+  window.scrollTo(0, y);
+}
+function go(s){
+  screen = s;
+  if(s === 'notif'){ render(); loadHistory(); }
+  else if(s === 'all'){ render(); if(allSel) loadAll(); }
+  else render();
+  window.scrollTo(0, 0);
+}
+function goBack(){
+  if(screen === 'form'){ saveDraft(true); data = null; }
+  if(screen === 'detail') return go(curBack);
+  go('menu');
 }
 
-/* ============ ບລ໋ອກປຸ່ມຍ້ອນກັບ / ລີເຊັດ ============ */
+/* ============ ບລ໋ອກປຸ່ມຍ້ອນກັບຂອງເບຣົາເຊີ ============ */
 function lockNav(){
   history.pushState({lock:1}, '', location.href);
   history.pushState({lock:2}, '', location.href);
 }
 window.addEventListener('popstate', () => {
-  if(user){ history.pushState({lock:3}, '', location.href); toast(t('backLocked')); }
+  if(!user) return;
+  if(screen === 'menu' || screen === 'done' || screen === 'login') return;   // ໜ້າເມນູ: ປຸ່ມຍ້ອນກັບອອກຈາກແອັບໄດ້ຕາມປົກກະຕິ
+  history.pushState({lock:3}, '', location.href);
+  goBack();                                                                  // ໜ້າຍ່ອຍ: ຍ້ອນກັບ = ກັບເມນູ
 });
 window.addEventListener('beforeunload', e => {
-  if(user && screen==='form'){ saveDraft(true); e.preventDefault(); e.returnValue=''; }
+  if(user && screen === 'form'){ saveDraft(true); e.preventDefault(); e.returnValue = ''; }
 });
 window.addEventListener('pagehide', () => saveDraft(true));
-document.addEventListener('visibilitychange', () => { if(document.hidden) saveDraft(true); });
+document.addEventListener('visibilitychange', () => { if(document.hidden) saveDraft(true); else flushQueue(); });
 document.addEventListener('keydown', e => {
-  if(!user) return;
+  if(!user || screen !== 'form') return;
   const k = e.key.toLowerCase();
-  if(e.key==='F5' || ((e.ctrlKey||e.metaKey) && k==='r')) e.preventDefault();
+  if(e.key === 'F5' || ((e.ctrlKey||e.metaKey) && k === 'r')) e.preventDefault();
 });
+window.addEventListener('online', () => { render(); flushQueue(); });
+window.addEventListener('offline', () => render());
 
 /* ============ ເຫດການ ============ */
 const app = $('#app');
 app.addEventListener('input', e => {
   const el = e.target;
-  if(el.id==='userSel'){ pendingUser = el.value; const st = store.get('wr_theme_'+el.value); if(THEME_IDS.includes(st)) setTheme(st, false); return; }
+  if(el.id === 'userSel'){ pendingUser = el.value; const st = store.get('wr_theme_'+el.value); if(THEME_IDS.includes(st)) setTheme(st, false); return; }
+  if(el.id === 'allSel'){ allSel = el.value; loadAll(); return; }
   const sec = el.dataset.sec; if(!sec || !data) return;
   data.sid = null;
-  if(sec==='period'){ data[el.dataset.k] = +el.value; }
+  if(sec === 'period'){ data[el.dataset.k] = +el.value; }
   else { data[sec][+el.dataset.i][el.dataset.k] = el.value; }
   saveDraft();
+});
+app.addEventListener('change', e => {
+  const el = e.target;
+  if(el.id === 'avCam' || el.id === 'avPick'){
+    const f = el.files && el.files[0];
+    if(f) setAvatar(f);
+    el.value = '';
+  }
 });
 app.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if(!b) return;
   const act = b.dataset.act;
-  if(act==='theme'){ setTheme(b.dataset.v); return; }
-  if(act==='lang'){
+  if(act === 'theme'){ setTheme(b.dataset.v); return; }
+  if(act === 'lang'){
     lang = b.dataset.v; store.set('wr_lang', lang);
-    if(screen==='login'){ pendingUser = ($('#userSel')||{}).value || pendingUser; }
+    if(screen === 'login'){ pendingUser = ($('#userSel')||{}).value || pendingUser; }
     render();
   }
-  else if(act==='enter'){
+  else if(act === 'enter'){
     const v = ($('#userSel')||{}).value || pendingUser;
     if(!v || !CFG.USERS.includes(v)){ toast(t('needName')); return; }
     user = v; store.set('wr_user', user);
     { const st = store.get('wr_theme_'+v); setTheme(THEME_IDS.includes(st) ? st : theme); }
-    data = loadDraft(user) || newData();
-    screen = 'form'; lockNav(); render(); window.scrollTo(0,0);
+    data = null; hist = { list:null, loading:false, err:false }; allSel = ''; allState = { list:null, loading:false, err:'' };
+    lockNav(); go('menu'); flushQueue();
   }
-  else if(act==='add'){
+  else if(act === 'nav'){
+    const to = b.dataset.to;
+    if(to === 'all' && !CFG.ADMINS.includes(user)){ toast(t('noAccess')); return; }
+    if(to === 'form') data = loadDraft(user) || newData();
+    go(to);
+  }
+  else if(act === 'back'){ goBack(); }
+  else if(act === 'tomenu'){ go('menu'); }
+  else if(act === 'open'){
+    curReport = viewList[+b.dataset.i]; curBack = screen;
+    if(curReport) go('detail');
+  }
+  else if(act === 'reload'){ screen === 'all' ? loadAll() : loadHistory(); }
+  else if(act === 'avcam'){ const i = $('#avCam'); if(i) i.click(); }
+  else if(act === 'avpick'){ const i = $('#avPick'); if(i) i.click(); }
+  else if(act === 'add'){
     data[b.dataset.sec].push(blank(b.dataset.sec)); saveDraft(true); render();
   }
-  else if(act==='rm'){
+  else if(act === 'rm'){
     const list = data[b.dataset.sec];
-    if(list.length>1){ list.splice(+b.dataset.i,1); saveDraft(true); render(); }
+    if(list.length > 1){ list.splice(+b.dataset.i, 1); saveDraft(true); render(); }
   }
-  else if(act==='submit'){ submit(); }
-  else if(act==='notif'){ enableNotif(); }
-  else if(act==='logout'){
+  else if(act === 'submit'){ submit(); }
+  else if(act === 'notif'){ enableNotif(); }
+  else if(act === 'logout'){
     if(!confirm(t('logoutConfirm'))) return;
     saveDraft(true);
     user = ''; data = null; pendingUser = ''; store.del('wr_user');
-    screen = 'login'; render();
+    hist = { list:null, loading:false, err:false }; allSel = ''; allState = { list:null, loading:false, err:'' };
+    screen = 'login'; render(); window.scrollTo(0, 0);
   }
-  else if(act==='newreport'){
-    data = newData(); screen = 'form'; render(); window.scrollTo(0,0);
+  else if(act === 'newreport'){
+    data = newData(); go('form');
   }
 });
 
@@ -540,8 +926,8 @@ app.addEventListener('click', e => {
 function notifSupported(){ return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; }
 function notifState(){
   if(!notifSupported()) return 'unsupported';
-  if(Notification.permission==='denied') return 'denied';
-  if(Notification.permission==='granted' && store.get('wr_notif_'+user)==='1') return 'on';
+  if(Notification.permission === 'denied') return 'denied';
+  if(Notification.permission === 'granted' && store.get('wr_notif_'+user) === '1') return 'on';
   return 'off';
 }
 function notifCard(){
@@ -561,7 +947,7 @@ async function enableNotif(){
   if(CFG.PUSH_URL.startsWith('PASTE_') || CFG.VAPID_PUBLIC.startsWith('PASTE_')){ toast(t('cfgMissing')); return; }
   try{
     const perm = await Notification.requestPermission();
-    if(perm!=='granted'){ render(); toast(t('notifDenied')); return; }
+    if(perm !== 'granted'){ render(); toast(t('notifDenied')); return; }
     const reg = await navigator.serviceWorker.ready;
     let sub = await reg.pushManager.getSubscription();
     if(!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey:urlB64ToUint8Array(CFG.VAPID_PUBLIC) });
@@ -599,22 +985,30 @@ async function submit(){
   if(!total){ toast(t('empty')); return; }
   if(!confirm(t('confirm'))) return;
   if(CFG.SCRIPT_URL.startsWith('PASTE_')){ toast(t('cfgMissing')); return; }
+
+  const finish = queued => {
+    store.del('wr_draft_'+user);
+    data = null; doneQueued = queued; hist.list = queued ? hist.list : null;
+    screen = 'done'; render(); window.scrollTo(0, 0);
+  };
+  const enqueue = () => {
+    const q = getQ().filter(x => x.payload.sid !== payload.sid);
+    q.push({ payload, ts: nowStamp() });
+    setQ(q);
+  };
+
+  saveDraft(true);
+  if(navigator.onLine === false){ enqueue(); finish(true); return; }     // ອອບລາຍ: ເກັບໄວ້ກ່ອນ ສົ່ງເມື່ອມີເນັດ
+
   busy = true;
   const btn = $('#submitBtn'); if(btn){ btn.disabled = true; btn.textContent = t('sending'); }
-  const ctl = new AbortController();
-  const to = setTimeout(()=>ctl.abort(), 25000);
-  try{
-    saveDraft(true);
-    const r = await fetch(CFG.SCRIPT_URL, { method:'POST', body: JSON.stringify(payload), signal: ctl.signal });
-    const j = await r.json();
-    if(!j.ok) throw new Error(j.error || 'failed');
-    store.del('wr_draft_'+user);
-    data = null; screen = 'done'; render(); window.scrollTo(0,0);
-  }catch(err){
+  const r = await postReport(payload);
+  busy = false;
+  if(r.ok){ finish(false); }
+  else if(r.net){ enqueue(); finish(true); }                              // ເນັດຂາດ/ຊ້າ: ເກັບໄວ້ ແລ້ວລອງສົ່ງອັດຕະໂນມັດ (sid ກັນບັນທຶກຊ້ຳ)
+  else{
     toast(t('fail'));
     const b2 = $('#submitBtn'); if(b2){ b2.disabled = false; b2.textContent = t('submit'); }
-  }finally{
-    clearTimeout(to); busy = false;
   }
 }
 
@@ -622,9 +1016,12 @@ async function submit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
 }
+setInterval(flushQueue, 60000);
 setTheme(theme, !!user);
 if(user) lockNav();
 render();
+flushQueue();
+
 </script>
 </body>
 </html>
